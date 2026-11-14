@@ -1,26 +1,96 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --background: #f5f3ee;
+  --surface: #fbfaf7;
+  --foreground: #17160f;
+  --muted: #6b6a62;
+  --line: #dedbd2;
+  --accent: #d9481a;
+  --accent-soft: #f6dfd4;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0f0f0d;
+    --surface: #171714;
+    --foreground: #ecebe6;
+    --muted: #9b9a92;
+    --line: #2a2a26;
+    --accent: #ff6a33;
+    --accent-soft: #3a1d12;
   }
 }
 
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-instrument-serif);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
+  overflow-x: clip;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+/* Blog post text, using the site's colours in both themes */
+.prose-site {
+  --tw-prose-body: color-mix(in srgb, var(--foreground) 85%, transparent);
+  --tw-prose-headings: var(--foreground);
+  --tw-prose-links: var(--accent);
+  --tw-prose-bold: var(--foreground);
+  --tw-prose-bullets: var(--accent);
+  --tw-prose-counters: var(--muted);
+  --tw-prose-quotes: var(--foreground);
+  --tw-prose-quote-borders: var(--accent);
+  --tw-prose-hr: var(--line);
+  --tw-prose-code: var(--foreground);
+  --tw-prose-pre-bg: var(--surface);
+  --tw-prose-pre-code: var(--foreground);
+  --tw-prose-th-borders: var(--line);
+  --tw-prose-td-borders: var(--line);
+}
+
+.prose-site :is(h2, h3) {
+  font-family: var(--font-instrument-serif), serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.prose-site h2 {
+  font-size: 2.25rem;
+}
+
+.prose-site pre {
+  border: 1px solid var(--line);
+}
+
+.hero-canvas {
+  animation: hero-fade 1.6s ease-out both;
+}
+
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--background);
 }

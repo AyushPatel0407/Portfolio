@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ayush Patel — Portfolio
 
-## Getting Started
+Personal portfolio, freelance page and blog, built with Next.js 15, Tailwind CSS 4 and Three.js.
 
-First, run the development server:
+## Run it locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Edit the content
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Almost everything on the site lives in [`src/data/profile.ts`](src/data/profile.ts):
 
-## Learn More
+- `profile`: name, role, intro, LinkedIn, and optional `email` / `github` links
+- `workProjects` / `personalProjects`: project cards (leave `description` empty to show "Write-up coming soon")
+- `experience`, `skills`, `education`, `certifications`
+- `freelance`: availability badge, services, process, ways to work and FAQ. Set `available: false` to hide the "Open to freelance" badge.
 
-To learn more about Next.js, take a look at the following resources:
+## Write a blog post
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Add a Markdown file to `content/blog/`. The file name becomes the URL, so `content/blog/my-first-erp.md` is served at `/blog/my-first-erp`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```md
+---
+title: "My post title"
+date: 2026-12-01
+summary: "One or two sentences shown on the blog list."
+tags: ["Next.js", "ERP"]
+draft: false
+---
 
-## Deploy on Vercel
+Write the post here in Markdown.
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Set `draft: true` to keep a post off the site while you work on it.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Pages
+
+| Route | What it is |
+| --- | --- |
+| `/` | Portfolio home with the Three.js hero |
+| `/freelance` | Freelance services and project brief form |
+| `/blog` | Blog index |
+| `/blog/[slug]` | A single post |
+
+## Deploy
+
+The site is fully static, so it works on Vercel, Netlify or any Node host. On Vercel: import the GitHub repository and deploy with the default settings.
