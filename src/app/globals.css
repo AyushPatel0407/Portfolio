@@ -38,6 +38,9 @@
 
 html {
   scroll-behavior: smooth;
+  /* The full-bleed hero uses 100vw, which includes the scrollbar on desktop;
+     clip on the root too so it can never cause sideways scrolling. */
+  overflow-x: clip;
 }
 
 body {

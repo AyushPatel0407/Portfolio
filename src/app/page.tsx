@@ -71,7 +71,7 @@ export default function Home() {
           {freelance.available && (
             <Link
               href="/freelance"
-              className="group mb-8 inline-flex items-center gap-2.5 rounded-full border border-line bg-background/70 py-1.5 pl-3 pr-4 text-sm backdrop-blur transition-colors hover:border-accent"
+              className="group mb-8 inline-flex min-h-11 items-center gap-2.5 rounded-full border border-line bg-background/70 py-1.5 pl-3 pr-4 text-sm backdrop-blur transition-colors hover:border-accent"
             >
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-60" />
@@ -98,13 +98,13 @@ export default function Home() {
               <div className="mt-6 flex flex-wrap gap-3">
                 <a
                   href="#work"
-                  className="btn-press rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-85"
+                  className="btn-press inline-flex min-h-11 items-center rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-85"
                 >
                   See my work
                 </a>
                 <Link
                   href="/freelance"
-                  className="btn-press rounded-full border border-line bg-background/60 px-5 py-2.5 text-sm font-medium backdrop-blur transition-colors hover:border-foreground"
+                  className="btn-press inline-flex min-h-11 items-center rounded-full border border-line bg-background/60 px-5 py-2.5 text-sm font-medium backdrop-blur transition-colors hover:border-foreground"
                 >
                   Hire me
                 </Link>
@@ -267,7 +267,7 @@ export default function Home() {
               </li>
             ))}
           </ul>
-          <Link href="/blog" className="mt-6 inline-block font-mono text-xs uppercase tracking-wider text-accent">
+          <Link href="/blog" className="mt-4 inline-flex min-h-11 items-center font-mono text-xs uppercase tracking-wider text-accent">
             All posts →
           </Link>
         </section>

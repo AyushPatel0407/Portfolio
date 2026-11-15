@@ -56,7 +56,7 @@ export default async function CaseStudyPage({ params }: Params) {
     <main className="pb-24">
       {/* Intro */}
       <section className="pb-16 pt-16 sm:pt-24">
-        <Link href="/#work" className="link-draw font-mono text-xs uppercase tracking-wider text-muted">
+        <Link href="/#work" className="inline-flex min-h-11 items-center font-mono text-xs uppercase tracking-wider text-muted transition-colors hover:text-accent">
           ← All projects
         </Link>
         <p className="mt-10 font-mono text-xs uppercase tracking-[0.2em] text-accent">

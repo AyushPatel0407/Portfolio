@@ -33,7 +33,7 @@ export default async function BlogPost({ params }: Params) {
     <main className="pb-24">
       <article className="mx-auto max-w-3xl">
         <header className="pb-12 pt-16 sm:pt-24">
-          <Link href="/blog" className="font-mono text-xs uppercase tracking-wider text-muted hover:text-accent">
+          <Link href="/blog" className="inline-flex min-h-11 items-center font-mono text-xs uppercase tracking-wider text-muted hover:text-accent">
             ← All posts
           </Link>
           <h1 className="mt-8 font-serif text-5xl leading-[0.95] tracking-tight sm:text-7xl">{post.title}</h1>

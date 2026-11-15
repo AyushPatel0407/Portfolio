@@ -88,7 +88,7 @@ export default function MarvelTimeline({ entries }: { entries: McuEntry[] }) {
       active ? "bg-foreground text-background" : "text-muted hover:text-foreground"
     }`;
   const chip = (active: boolean) =>
-    `btn-press min-h-11 rounded-full border px-4 py-2 text-sm transition-colors ${
+    `btn-press min-h-11 shrink-0 whitespace-nowrap rounded-full border px-4 py-2 text-sm transition-colors ${
       active ? "border-foreground bg-foreground text-background" : "border-line hover:border-foreground"
     }`;
 
@@ -108,7 +108,7 @@ export default function MarvelTimeline({ entries }: { entries: McuEntry[] }) {
       </div>
 
       {/* Controls */}
-      <div className="sticky top-16 z-10 -mx-4 mt-8 flex flex-col gap-3 border-y border-line bg-background/90 px-4 py-4 backdrop-blur sm:-mx-8 sm:px-8">
+      <div className="z-10 -mx-4 mt-8 md:sticky md:top-16 flex flex-col gap-3 border-y border-line bg-background/90 px-4 py-4 backdrop-blur sm:-mx-8 sm:px-8">
         <div className="flex flex-wrap items-center gap-3">
           <div role="group" aria-label="Order" className="inline-flex rounded-full border border-line p-1">
             <button type="button" aria-pressed={order === "release"} onClick={() => setOrder("release")} className={seg(order === "release")}>
@@ -135,7 +135,7 @@ export default function MarvelTimeline({ entries }: { entries: McuEntry[] }) {
             Show upcoming
           </label>
         </div>
-        <div role="group" aria-label="Phase" className="flex flex-wrap gap-2">
+        <div role="group" aria-label="Phase" className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:-mx-8 sm:px-8">
           <button type="button" aria-pressed={phase === "all"} onClick={() => setPhase("all")} className={chip(phase === "all")}>
             All phases
           </button>

@@ -110,7 +110,7 @@ export default function FreelancePage() {
             </li>
           ))}
         </ul>
-        <Link href="/#work" className="mt-6 inline-block font-mono text-xs uppercase tracking-wider text-accent">
+        <Link href="/#work" className="mt-4 inline-flex min-h-11 items-center font-mono text-xs uppercase tracking-wider text-accent">
           See all projects →
         </Link>
       </section>
