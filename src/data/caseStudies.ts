@@ -15,7 +15,7 @@ export type CaseStudy = {
 
 export const caseStudies: Record<string, CaseStudy> = {
   OEMup: {
-    role: "Architect & team lead",
+    role: "Architect & technical lead",
     period: "2023 – present",
     status: "Live",
     summary:
@@ -71,7 +71,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     stack: ["React", "React Router SSR", "Tailwind CSS", "Node.js", "Express", "MongoDB", "Socket.IO", "Claude API", "PDFKit", "Docker"],
   },
   TECTET: {
-    role: "Team lead · full-stack developer",
+    role: "Technical lead · full-stack developer",
     period: "2026",
     status: "Live",
     summary:
@@ -119,7 +119,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     stack: ["NestJS", "Next.js 16", "React 19", "MongoDB", "Three.js model-viewer", "Tiptap", "React PDF", "ExcelJS", "GitHub Actions"],
   },
   "Night Zero": {
-    role: "Team lead · full-stack developer",
+    role: "Technical lead · full-stack developer",
     period: "2026",
     status: "Live",
     summary:

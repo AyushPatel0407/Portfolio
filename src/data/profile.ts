@@ -10,10 +10,10 @@ export type Project = {
 
 export const profile = {
   name: "Ayush Patel",
-  role: "Tech Head at CHEMAZON · Team Lead at Kira Intrilogy",
+  role: "Tech Head at CHEMAZON · Technical Lead at Kira Intrilogy",
   headline: "I build ERP, CRM and commerce software for Indian businesses.",
   intro:
-    "Full-stack MERN and Next.js developer from Ahmedabad. I'm Team Lead at Kira Intrilogy, where we've shipped production products since 2023, from a manufacturing ERP to a WhatsApp team inbox. I also lead technology at CHEMAZON.",
+    "Full-stack MERN and Next.js developer from Ahmedabad. I'm Technical Lead at Kira Intrilogy, where we've shipped production products since 2023, from a manufacturing ERP to a WhatsApp team inbox. I also lead technology at CHEMAZON.",
   location: "Ahmedabad, Gujarat, India",
   linkedin: "https://www.linkedin.com/in/ayush-patel-691270187/",
   email: "patelayush4702@gmail.com",
@@ -161,12 +161,20 @@ export const experience = [
     detail: "Leading technology for a verified B2B chemicals marketplace.",
   },
   {
-    role: "Team Lead",
+    role: "Technical Lead",
     company: "Kira Intrilogy",
     type: "Full-time · On-site",
-    period: "Jun 2023 – Present",
+    period: "Apr 2026 – Present",
     detail:
-      "Architected and lead the OEMup ERP: CRM, procurement, accounting, stock, production and HR modules. Optimised MongoDB aggregation pipelines, built Ag-Grid server-side tables for large datasets, Excel bulk import with validation, PDF invoices and role-based permissions. Lead the team shipping TECTET, ALFAconnect and Night Zero.",
+      "Architect and technical lead for the company's SaaS and commerce products: OEMup's architecture and its MCP connector for Claude, and the teams shipping TECTET, ALFAconnect, Night Zero and E Gate.",
+  },
+  {
+    role: "MERN Stack Developer",
+    company: "Kira Intrilogy",
+    type: "Full-time · On-site",
+    period: "Jun 2023 – Nov 2026",
+    detail:
+      "Built the OEMup ERP: CRM, procurement, multi-level BOM and production, stock, GST accounting and HR. Optimised MongoDB aggregation pipelines, built Ag-Grid server-side tables for large datasets, Excel bulk import with validation, PDF invoices and role-based permissions.",
   },
   {
     role: "React JS Developer",
