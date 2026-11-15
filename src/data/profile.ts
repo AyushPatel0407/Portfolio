@@ -23,8 +23,8 @@ export const profile = {
 
 export const stats = [
   { value: "3+ yrs", label: "Building production software" },
-  { value: "7", label: "Products shipped at work" },
-  { value: "MERN", label: "Plus Next.js, GraphQL and Firebase" },
+  { value: "8", label: "Products shipped at work" },
+  { value: "MERN", label: "Plus Next.js, NestJS and PostgreSQL" },
 ];
 
 export const workProjects: Project[] = [
@@ -32,48 +32,56 @@ export const workProjects: Project[] = [
     name: "OEMup",
     category: "Manufacturing ERP · SaaS",
     description:
-      "Cloud ERP and CRM for Indian manufacturers that I architected and lead. CRM, procurement, multi-level BOM, production, stock, GST accounting and HR in one platform.",
+      "Cloud ERP for Indian manufacturers that I architect and lead: sales, stock, production, GST accounting and HR, with an Android app and a read-only MCP connector for Claude.",
     url: "https://oemup.app",
-    tags: ["Multi-level BOM", "GST accounting", "Ag-Grid SSRM", "Role-based access"],
+    tags: ["Multi-level BOM", "GST accounting", "React Native app", "MCP connector"],
   },
   {
     name: "CHEMAZON",
     category: "B2B Marketplace",
     description:
-      "Marketplace for industrial chemicals where every batch carries its COA, TDS and SDS documents and every seller is KYC-verified.",
-    url: "https://chemazon.store",
-    tags: ["Marketplace", "Seller KYC", "Batch documents"],
+      "Verified B2B chemicals marketplace: buyers purchase batches from KYC-checked sellers, with quality documents, quotes, escrow-protected payments and live order updates.",
+    url: "https://www.chemazon.store",
+    tags: ["Escrow ledger", "Socket.IO", "Claude listing AI", "Cart stock holds"],
   },
   {
     name: "TECTET",
-    category: "Customer Messaging",
+    category: "WhatsApp Business SaaS",
     description:
-      "Shared WhatsApp inbox for teams: assignment, internal notes, template broadcasts with delivery reports, and prepaid message credits.",
+      "Shared WhatsApp inbox for teams on the official Meta Cloud API: assign chats, reply together and send approved template broadcasts to contact lists.",
     url: "https://tectet.co",
-    tags: ["WhatsApp API", "Team inbox", "Broadcasts"],
+    tags: ["NestJS", "Next.js", "BullMQ + Redis", "WhatsApp Cloud API"],
   },
   {
     name: "ALFAconnect",
     category: "Industrial E-commerce",
     description:
-      "Online store for Alfa Pumps' chemical-process pumps, with spare-part search by model, engineer-assisted sizing, bulk RFQs and a dealer portal.",
+      "Online store for industrial pumps, spare parts and accessories, with 3D product views, model comparison, GST invoicing and warehouse pickup.",
     url: "https://store.alfapumps.com",
-    tags: ["E-commerce", "RFQ", "Dealer portal"],
+    tags: ["NestJS", "Next.js", "3D product viewer", "GST invoicing"],
   },
   {
     name: "Night Zero",
     category: "Event Ticketing",
     description:
-      "Pass booking for a Garba night in Ahmedabad: OTP checkout, Razorpay payments, group bookings and QR entry passes sent over WhatsApp and email.",
-    url: "https://nightzero.in",
-    tags: ["Next.js", "Razorpay", "QR entry"],
+      "Garba night ticketing: buy passes, get signed QR passes on WhatsApp and email, and check guests in with gate scanners that work even offline.",
+    url: "https://www.nightzero.in",
+    tags: ["Razorpay", "Offline scanner", "Signed QR passes", "WhatsApp delivery"],
+  },
+  {
+    name: "Kira Intrilogy website",
+    category: "Company Website · CMS",
+    description:
+      "Company website with services, portfolio, careers and blog, plus a custom admin panel so the team can edit every page and its SEO without code.",
+    url: "https://www.kiraintrilogy.com",
+    tags: ["Next.js 16", "Prisma", "Headless CMS", "Playwright"],
   },
   {
     name: "E Gate",
     category: "Visitor Management",
     description:
-      "Visitor management for companies: invite guests, issue QR gate passes and let security check people in and out, with employee records and visitor policies.",
-    tags: ["QR gate passes", "Multi-company", "AG Grid", "Role-based access"],
+      "Visitor management for offices: guests self-register or get pre-invited, hosts approve, QR passes go out by email, and security scans visitors in and out.",
+    tags: ["QR gate passes", "Self check-in", "Access control", "MERN stack"],
   },
   {
     name: "Starkidz",
@@ -112,6 +120,14 @@ export const personalProjects: Project[] = [
 // Client and team projects where I contributed part of the work.
 export const clientProjects: Project[] = [
   {
+    name: "MeghVin Foundation",
+    category: "NGO Website · CMS",
+    description:
+      "Bilingual English–Gujarati website and content studio for a charitable trust: donations, activity diary and gallery, plus admin tools for posters, receipts and certificates.",
+    // TODO: add url: "https://www.meghvinfoundation.org" once the domain is live
+    tags: ["Next.js 16", "Poster studio", "PDF receipts", "Three.js"],
+  },
+  {
     name: "Swadhyay Shala",
     category: "Online Learning · Contributor",
     description:
@@ -130,7 +146,6 @@ export const clientProjects: Project[] = [
 ];
 
 export const earlierBuilds = [
-  { name: "Kira Intrilogy website", detail: "Next.js site with careers, resume upload and a CMS-style admin", period: "" },
   { name: "Pixibytez website", detail: "Next.js company site built from Figma designs", period: "" },
   { name: "Koheva Quiz Game", detail: "React.js quiz game with Firebase", period: "2023" },
   { name: "Space-bet", detail: "Real-time game built with Socket.io", period: "2023" },
@@ -176,7 +191,7 @@ export const skills = [
   },
   {
     group: "Back end & data",
-    items: ["Node.js", "Express", "NestJS", "MongoDB", "PostgreSQL", "Redis", "GraphQL", "Firebase", "Socket.io"],
+    items: ["Node.js", "Express", "NestJS", "MongoDB", "PostgreSQL", "Prisma", "Redis", "BullMQ", "GraphQL", "Firebase", "Socket.io"],
   },
   {
     group: "Tools & cloud",
@@ -184,7 +199,7 @@ export const skills = [
   },
   {
     group: "Domains",
-    items: ["ERP", "CRM", "GST e-invoicing", "B2B marketplaces", "Payments", "WhatsApp messaging"],
+    items: ["ERP", "CRM", "GST e-invoicing", "B2B marketplaces", "Payments", "WhatsApp messaging", "AI connectors (MCP)"],
   },
 ];
 
