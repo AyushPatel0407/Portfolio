@@ -123,7 +123,7 @@ export const clientProjects: Project[] = [
     category: "NGO Website · CMS",
     description:
       "Bilingual English–Gujarati website and content studio for a charitable trust: donations, activity diary and gallery, plus admin tools for posters, receipts and certificates.",
-    // TODO: add url: "https://www.meghvinfoundation.org" once the domain is live
+    url: "https://www.meghvinfoundation.in",
     tags: ["Next.js 16", "Poster studio", "PDF receipts", "Three.js"],
   },
   {

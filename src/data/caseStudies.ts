@@ -213,7 +213,7 @@ export const caseStudies: Record<string, CaseStudy> = {
   "MeghVin Foundation": {
     role: "Sole developer (freelance)",
     period: "2026",
-    status: "Built, launching",
+    status: "Live",
     summary:
       "A bilingual English and Gujarati website and content studio for a charitable trust in Ahmedabad and Navi Mumbai. The trust's team updates every page, publishes activities and produces posters, receipts and certificates themselves.",
     highlights: [
