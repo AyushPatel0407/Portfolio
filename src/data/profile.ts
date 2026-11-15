@@ -16,9 +16,8 @@ export const profile = {
     "Full-stack MERN and Next.js developer from Ahmedabad. I'm Team Lead at Kira Intrilogy, where we've shipped production products since 2023, from a manufacturing ERP to a WhatsApp team inbox. I also lead technology at CHEMAZON.",
   location: "Ahmedabad, Gujarat, India",
   linkedin: "https://www.linkedin.com/in/ayush-patel-691270187/",
-  // TODO: add a public email or GitHub link if you want them on the site.
-  email: "",
-  github: "",
+  email: "patelayush4702@gmail.com",
+  github: "https://github.com/AyushPatel0407",
 };
 
 export const stats = [

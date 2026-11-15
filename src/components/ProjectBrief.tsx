@@ -86,7 +86,7 @@ export default function ProjectBrief({ services, email, linkedin }: Props) {
       <div className="flex flex-wrap items-center gap-4">
         <button
           type="submit"
-          className="rounded-full bg-accent px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
+          className="btn-press rounded-full bg-accent px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
         >
           {email ? "Send by email" : "Copy brief & open LinkedIn ↗"}
         </button>

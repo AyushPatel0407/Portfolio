@@ -15,22 +15,17 @@ import {
   workProjects,
   type Project,
 } from "@/data/profile";
+import { caseStudies, slugify } from "@/data/caseStudies";
 import { formatDate, getAllPosts } from "@/lib/blog";
-
-function hostOf(url: string) {
-  return url.replace(/^https?:\/\//, "").replace(/\/$/, "");
-}
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const pending = !project.description;
-  const Wrapper = project.url ? "a" : "div";
+  const hasStudy = Boolean(caseStudies[project.name]);
 
   return (
-    <Wrapper
-      {...(project.url ? { href: project.url, target: "_blank", rel: "noopener noreferrer" } : {})}
-      className={`group relative flex flex-col justify-between gap-8 rounded-2xl border border-line bg-surface p-6 transition-colors sm:p-8 ${
-        project.url ? "hover:border-accent" : ""
-      }`}
+    <Link
+      href={`/work/${slugify(project.name)}`}
+      className="card-lift group relative flex flex-col justify-between gap-8 rounded-2xl border border-line bg-surface p-6 hover:border-accent sm:p-8"
     >
       <div>
         <div className="mb-6 flex items-center justify-between font-mono text-xs text-muted">
@@ -51,13 +46,13 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             </li>
           ))}
         </ul>
-        {project.url && (
+        {hasStudy && (
           <span className="font-mono text-xs text-foreground transition-colors group-hover:text-accent">
-            {hostOf(project.url)} <span aria-hidden>↗</span>
+            Case study <span aria-hidden>→</span>
           </span>
         )}
       </div>
-    </Wrapper>
+    </Link>
   );
 }
 
@@ -102,13 +97,13 @@ export default function Home() {
               <div className="mt-6 flex flex-wrap gap-3">
                 <a
                   href="#work"
-                  className="rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-85"
+                  className="btn-press rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-85"
                 >
                   See my work
                 </a>
                 <Link
                   href="/freelance"
-                  className="rounded-full border border-line bg-background/60 px-5 py-2.5 text-sm font-medium backdrop-blur transition-colors hover:border-foreground"
+                  className="btn-press rounded-full border border-line bg-background/60 px-5 py-2.5 text-sm font-medium backdrop-blur transition-colors hover:border-foreground"
                 >
                   Hire me
                 </Link>

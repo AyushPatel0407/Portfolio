@@ -46,6 +46,7 @@ Set `draft: true` to keep a post off the site while you work on it.
 | `/freelance` | Freelance services and project brief form |
 | `/blog` | Blog index |
 | `/blog/[slug]` | A single post |
+| `/work/[slug]` | Case study for each project (content in `src/data/caseStudies.ts`) |
 
 ## Deploy
 

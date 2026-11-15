@@ -6,6 +6,7 @@ import { freelance, profile, workProjects } from "@/data/profile";
 
 export const metadata: Metadata = {
   title: "Freelance",
+  alternates: { canonical: "/freelance" },
   description:
     "Hire Ayush Patel for custom ERP and CRM software, B2B marketplaces, SaaS MVPs, WhatsApp and payment integrations, and Next.js websites.",
 };

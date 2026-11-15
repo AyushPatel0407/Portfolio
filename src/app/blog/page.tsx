@@ -4,6 +4,7 @@ import { formatDate, getAllPosts } from "@/lib/blog";
 
 export const metadata: Metadata = {
   title: "Blog",
+  alternates: { canonical: "/blog" },
   description:
     "Notes from Ayush Patel on building ERP and business software, the MERN stack, Next.js and leading a small product team.",
 };

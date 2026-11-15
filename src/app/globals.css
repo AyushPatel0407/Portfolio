@@ -79,6 +79,74 @@ body {
   border: 1px solid var(--line);
 }
 
+/* ---- Interaction layer: lift, underline draw, press, focus ---- */
+
+.card-lift {
+  transition:
+    transform 200ms ease,
+    border-color 200ms ease;
+}
+.card-lift:hover {
+  transform: translateY(-2px);
+}
+
+.link-draw {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 250ms ease, color 200ms ease;
+}
+.link-draw:hover {
+  background-size: 100% 1px;
+}
+
+.btn-press {
+  transition:
+    transform 150ms ease,
+    opacity 150ms ease,
+    border-color 200ms ease;
+}
+.btn-press:hover {
+  transform: translateY(-1px);
+}
+.btn-press:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 50;
+  border-radius: 999px;
+  background: var(--foreground);
+  color: var(--background);
+  padding: 0.6rem 1.1rem;
+  font-size: 0.875rem;
+  transition: top 150ms ease;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 .hero-canvas {
   animation: hero-fade 1.6s ease-out both;
 }

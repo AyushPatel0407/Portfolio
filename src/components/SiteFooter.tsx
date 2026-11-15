@@ -15,20 +15,20 @@ export default function SiteFooter() {
           href={profile.linkedin}
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-full bg-accent px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
+          className="btn-press rounded-full bg-accent px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
         >
           Message me on LinkedIn ↗
         </a>
         <Link
           href="/freelance"
-          className="rounded-full border border-line px-6 py-3 text-sm font-medium transition-colors hover:border-foreground"
+          className="btn-press rounded-full border border-line px-6 py-3 text-sm font-medium transition-colors hover:border-foreground"
         >
           Freelance services
         </Link>
         {profile.email && (
           <a
             href={`mailto:${profile.email}`}
-            className="rounded-full border border-line px-6 py-3 text-sm font-medium transition-colors hover:border-foreground"
+            className="btn-press rounded-full border border-line px-6 py-3 text-sm font-medium transition-colors hover:border-foreground"
           >
             {profile.email}
           </a>
@@ -38,7 +38,7 @@ export default function SiteFooter() {
             href={profile.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full border border-line px-6 py-3 text-sm font-medium transition-colors hover:border-foreground"
+            className="btn-press rounded-full border border-line px-6 py-3 text-sm font-medium transition-colors hover:border-foreground"
           >
             GitHub ↗
           </a>
