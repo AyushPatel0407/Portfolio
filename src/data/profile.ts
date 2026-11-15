@@ -32,9 +32,9 @@ export const workProjects: Project[] = [
     name: "OEMup",
     category: "Manufacturing ERP · SaaS",
     description:
-      "Cloud ERP for small and mid-sized Indian factories. It brings CRM, production planning, inventory, GST e-invoicing and payroll into one platform instead of Tally plus spreadsheets.",
+      "Cloud ERP and CRM for Indian manufacturers that I architected and lead. CRM, procurement, multi-level BOM, production, stock, GST accounting and HR in one platform.",
     url: "https://oemup.app",
-    tags: ["BOM & MRP", "GST e-invoice", "Payroll", "Biometric sync"],
+    tags: ["Multi-level BOM", "GST accounting", "Ag-Grid SSRM", "Role-based access"],
   },
   {
     name: "CHEMAZON",
@@ -70,28 +70,68 @@ export const workProjects: Project[] = [
   },
   {
     name: "E Gate",
-    category: "Company project",
-    description: "", // TODO: add a one-line description and URL
-    tags: [],
+    category: "Visitor Management",
+    description:
+      "Visitor management for companies: invite guests, issue QR gate passes and let security check people in and out, with employee records and visitor policies.",
+    tags: ["QR gate passes", "Multi-company", "AG Grid", "Role-based access"],
   },
   {
-    name: "The StartKidz",
-    category: "Company project",
-    description: "", // TODO: add a one-line description and URL
-    tags: [],
+    name: "Starkidz",
+    category: "School Management",
+    description:
+      "School management platform. I led the contest and event creation modules and built QA screens and admin panel features as reusable React components.",
+    tags: ["React", "Events & contests", "Admin panel"],
   },
 ];
 
 export const personalProjects: Project[] = [
   {
     name: "Contact Convoy",
-    category: "Personal project",
-    description: "", // TODO: add a one-line description and URL
-    tags: [],
+    category: "B2B SaaS · Android app",
+    description:
+      "Scan business cards at exhibitions, let AI tidy the details, and follow up on every lead. Built for sales teams, with one plan per company and employee handover.",
+    url: "https://www.contactconvoy.com",
+    tags: ["Flutter", "AI card scanning", "Razorpay", "Cloud Run"],
+  },
+  {
+    name: "LetterHead Studio",
+    category: "Document SaaS · MVP",
+    description:
+      "Set up a letterhead and templates once, then issue numbered, print-accurate letters and PDFs, one at a time or in bulk from Excel. Built for small businesses.",
+    tags: ["Next.js 15", "Puppeteer PDF", "Tiptap editor", "Bulk from Excel"],
+  },
+  {
+    name: "VoltGo India",
+    category: "EV Charging · Prototype",
+    description:
+      "Find, book and pay for EV charging in India's Tier-2 cities: a driver app, operator and admin portals, and an OCPP gateway that talks directly to chargers.",
+    tags: ["OCPP 1.6J", "React Native", "Turborepo", "Razorpay"],
+  },
+];
+
+// Client and team projects where I contributed part of the work.
+export const clientProjects: Project[] = [
+  {
+    name: "Swadhyay Shala",
+    category: "Online Learning · Contributor",
+    description:
+      "Course and exam platform for Jain studies with paid enrolment, level-wise exams and PDF certificates in three languages. I built the learner web app and exam progress saving.",
+    url: "https://www.swadhyayshala.org",
+    tags: ["React 19", "Online exams", "Razorpay", "EN · HI · GU"],
+  },
+  {
+    name: "Dhandhar Porvad",
+    category: "Community Portal · Contributor",
+    description:
+      "Community portal and mobile-app backend covering census, matrimony, jobs, events and directories. I shipped PostgreSQL migrations, multi-image uploads and self-hosted file storage.",
+    url: "https://www.dhandharporvad.com",
+    tags: ["Next.js", "PostgreSQL", "Firebase push", "VPS deploy"],
   },
 ];
 
 export const earlierBuilds = [
+  { name: "Kira Intrilogy website", detail: "Next.js site with careers, resume upload and a CMS-style admin", period: "" },
+  { name: "Pixibytez website", detail: "Next.js company site built from Figma designs", period: "" },
   { name: "Koheva Quiz Game", detail: "React.js quiz game with Firebase", period: "2023" },
   { name: "Space-bet", detail: "Real-time game built with Socket.io", period: "2023" },
   { name: "News blog", detail: "React app built on a news API at InfoLabz", period: "2022" },
@@ -111,7 +151,7 @@ export const experience = [
     type: "Full-time · On-site",
     period: "Jun 2023 – Present",
     detail:
-      "Leading the team that builds SaaS and commerce products end to end on the MERN stack, including OEMup, TECTET, ALFAconnect and Night Zero.",
+      "Architected and lead the OEMup ERP: CRM, procurement, accounting, stock, production and HR modules. Optimised MongoDB aggregation pipelines, built Ag-Grid server-side tables for large datasets, Excel bulk import with validation, PDF invoices and role-based permissions. Lead the team shipping TECTET, ALFAconnect and Night Zero.",
   },
   {
     role: "React JS Developer",
@@ -132,11 +172,11 @@ export const experience = [
 export const skills = [
   {
     group: "Front end",
-    items: ["React.js", "Next.js", "Redux", "React Hooks", "JavaScript", "HTML", "SCSS", "Bootstrap"],
+    items: ["React.js", "Next.js", "TypeScript", "React Native", "Redux", "JavaScript", "Tailwind CSS", "Ant Design", "Ag-Grid"],
   },
   {
     group: "Back end & data",
-    items: ["Node.js", "MongoDB", "Express", "GraphQL", "Firebase", "Socket.io"],
+    items: ["Node.js", "Express", "NestJS", "MongoDB", "PostgreSQL", "Redis", "GraphQL", "Firebase", "Socket.io"],
   },
   {
     group: "Tools & cloud",

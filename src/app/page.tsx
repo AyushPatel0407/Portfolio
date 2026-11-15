@@ -3,6 +3,7 @@ import HeroCanvas from "@/components/HeroCanvas";
 import SectionLabel from "@/components/SectionLabel";
 import {
   certifications,
+  clientProjects,
   earlierBuilds,
   education,
   experience,
@@ -139,9 +140,19 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Client */}
+      <section className="pb-24">
+        <SectionLabel index="02">Freelance &amp; client work</SectionLabel>
+        <div className="grid gap-4 md:grid-cols-2">
+          {clientProjects.map((p, i) => (
+            <ProjectCard key={p.name} project={p} index={i} />
+          ))}
+        </div>
+      </section>
+
       {/* Personal */}
       <section className="pb-24">
-        <SectionLabel index="02">Personal project</SectionLabel>
+        <SectionLabel index="03">My own products</SectionLabel>
         <div className="grid gap-4 md:grid-cols-2">
           {personalProjects.map((p, i) => (
             <ProjectCard key={p.name} project={p} index={i} />
@@ -165,7 +176,7 @@ export default function Home() {
 
       {/* Experience */}
       <section id="experience" className="scroll-mt-20 pb-24">
-        <SectionLabel index="03">Experience</SectionLabel>
+        <SectionLabel index="04">Experience</SectionLabel>
         <ol>
           {experience.map((job) => (
             <li
@@ -189,7 +200,7 @@ export default function Home() {
 
       {/* Skills */}
       <section id="skills" className="scroll-mt-20 pb-24">
-        <SectionLabel index="04">Skills</SectionLabel>
+        <SectionLabel index="05">Skills</SectionLabel>
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {skills.map((group) => (
             <div key={group.group}>
@@ -209,7 +220,7 @@ export default function Home() {
       {/* Writing */}
       {posts.length > 0 && (
         <section id="writing" className="scroll-mt-20 pb-24">
-          <SectionLabel index="05">Latest writing</SectionLabel>
+          <SectionLabel index="06">Latest writing</SectionLabel>
           <ul className="border-t border-line">
             {posts.map((post) => (
               <li key={post.slug} className="border-b border-line">
@@ -239,7 +250,7 @@ export default function Home() {
 
       {/* Education */}
       <section className="pb-24">
-        <SectionLabel index={posts.length > 0 ? "06" : "05"}>Education &amp; certifications</SectionLabel>
+        <SectionLabel index={posts.length > 0 ? "07" : "06"}>Education &amp; certifications</SectionLabel>
         <div className="grid gap-10 md:grid-cols-[1fr_1.4fr]">
           <div>
             <p className="font-mono text-xs text-muted">{education.period}</p>
