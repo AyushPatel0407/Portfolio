@@ -15,7 +15,8 @@ import {
   workProjects,
   type Project,
 } from "@/data/profile";
-import { caseStudies, slugify } from "@/data/caseStudies";
+import SkillExplorer from "@/components/SkillExplorer";
+import { allProjects, caseStudies, slugify } from "@/data/caseStudies";
 import { formatDate, getAllPosts } from "@/lib/blog";
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
@@ -196,18 +197,47 @@ export default function Home() {
       {/* Skills */}
       <section id="skills" className="scroll-mt-20 pb-24">
         <SectionLabel index="05">Skills</SectionLabel>
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-          {skills.map((group) => (
-            <div key={group.group}>
-              <h3 className="mb-4 font-serif text-2xl">{group.group}</h3>
-              <ul className="flex flex-wrap gap-2">
-                {group.items.map((item) => (
-                  <li key={item} className="rounded-full bg-accent-soft px-3 py-1 text-sm">
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
+        <SkillExplorer
+          groups={skills}
+          projects={allProjects().map((p) => ({
+            name: p.name,
+            slug: p.slug,
+            category: p.category,
+            description: [p.description, p.study?.summary, ...(p.study?.highlights.map((h) => `${h.title} ${h.body}`) ?? [])].join(" "),
+            stack: [...(p.study?.stack ?? []), ...p.tags],
+          }))}
+        />
+      </section>
+
+      {/* Off the clock */}
+      <section id="off-the-clock" className="scroll-mt-20 pb-24">
+        <SectionLabel index="06">Off the clock</SectionLabel>
+        <div className="grid gap-4 md:grid-cols-2">
+          {[
+            {
+              href: "/watchlist",
+              title: "Binge-watch list",
+              body: "What I'm watching, what I've finished and what's next, with ratings.",
+            },
+            {
+              href: "/marvel",
+              title: "The Marvel timeline",
+              body: "Every MCU film and series in release or story order, with a tracker for what you've watched.",
+            },
+          ].map((c) => (
+            <Link
+              key={c.href}
+              href={c.href}
+              className="card-lift group flex flex-col justify-between gap-10 rounded-2xl border border-line bg-surface p-6 hover:border-accent sm:p-8"
+            >
+              <div>
+                <h3 className="font-serif text-4xl leading-none tracking-tight">{c.title}</h3>
+                <p className="mt-4 max-w-prose leading-relaxed text-muted">{c.body}</p>
+              </div>
+              <span className="font-mono text-xs transition-colors group-hover:text-accent">
+                Open <span aria-hidden>→</span>
+              </span>
+            </Link>
           ))}
         </div>
       </section>
@@ -215,7 +245,7 @@ export default function Home() {
       {/* Writing */}
       {posts.length > 0 && (
         <section id="writing" className="scroll-mt-20 pb-24">
-          <SectionLabel index="06">Latest writing</SectionLabel>
+          <SectionLabel index="07">Latest writing</SectionLabel>
           <ul className="border-t border-line">
             {posts.map((post) => (
               <li key={post.slug} className="border-b border-line">
@@ -245,7 +275,7 @@ export default function Home() {
 
       {/* Education */}
       <section className="pb-24">
-        <SectionLabel index={posts.length > 0 ? "07" : "06"}>Education &amp; certifications</SectionLabel>
+        <SectionLabel index={posts.length > 0 ? "08" : "07"}>Education &amp; certifications</SectionLabel>
         <div className="grid gap-10 md:grid-cols-[1fr_1.4fr]">
           <div>
             <p className="font-mono text-xs text-muted">{education.period}</p>

@@ -44,7 +44,20 @@ export default function SiteFooter() {
           </a>
         )}
       </div>
-      <div className="mt-20 flex flex-wrap justify-between gap-4 font-mono text-xs text-muted">
+      <nav aria-label="Footer" className="mt-16 flex flex-wrap gap-x-6 gap-y-1 font-mono text-xs uppercase tracking-wider text-muted">
+        {[
+          { href: "/#work", label: "Work" },
+          { href: "/freelance", label: "Freelance" },
+          { href: "/blog", label: "Blog" },
+          { href: "/watchlist", label: "Watch list" },
+          { href: "/marvel", label: "Marvel timeline" },
+        ].map((l) => (
+          <Link key={l.href} href={l.href} className="inline-flex min-h-11 items-center underline-offset-4 hover:text-foreground hover:underline">
+            {l.label}
+          </Link>
+        ))}
+      </nav>
+      <div className="mt-6 flex flex-wrap justify-between gap-4 font-mono text-xs text-muted">
         <span>
           © {new Date().getFullYear()} {profile.name}
         </span>
