@@ -26,7 +26,6 @@ ${profile.intro}
 - [Freelance](${siteUrl}/freelance): ${freelance.pitch}
 - [Blog](${siteUrl}/blog): notes on building business software, the MERN stack and Next.js
 - [Binge-watch list](${siteUrl}/watchlist): series and movies I am watching, finished and planning
-- [Marvel timeline](${siteUrl}/marvel): every MCU film and series in release or story order
 
 ## Projects
 

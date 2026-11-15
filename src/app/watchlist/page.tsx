@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import WatchlistBoard from "@/components/WatchlistBoard";
 import { profile } from "@/data/profile";
 import { watchlist } from "@/data/watchlist";
@@ -26,8 +25,7 @@ export default function WatchlistPage() {
           <span className="italic text-accent">list.</span>
         </h1>
         <p className="mt-8 max-w-xl text-lg leading-relaxed text-muted">
-          What I&apos;m watching after the code is shipped, what I&apos;ve finished, and what&apos;s next in the queue. Marvel
-          has its own <Link href="/marvel" className="link-draw text-accent">timeline page</Link>.
+          What I&apos;m watching after the code is shipped, what I&apos;ve finished, and what&apos;s next in the queue.
         </p>
 
         <dl className="mt-12 grid grid-cols-3 border-y border-line">

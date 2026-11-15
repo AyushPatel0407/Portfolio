@@ -159,7 +159,15 @@ export default function Home() {
               {earlierBuilds.map((b) => (
                 <li key={b.name} className="flex items-baseline justify-between gap-4 py-3">
                   <div>
-                    <p className="font-medium">{b.name}</p>
+                    <p className="font-medium">
+                      {b.url ? (
+                        <a href={b.url} target="_blank" rel="noopener noreferrer" className="link-draw hover:text-accent">
+                          {b.name} <span aria-hidden>↗</span>
+                        </a>
+                      ) : (
+                        b.name
+                      )}
+                    </p>
                     <p className="text-sm text-muted">{b.detail}</p>
                   </div>
                   <span className="font-mono text-xs text-muted">{b.period}</span>
@@ -212,17 +220,12 @@ export default function Home() {
       {/* Off the clock */}
       <section id="off-the-clock" className="scroll-mt-20 pb-24">
         <SectionLabel index="06">Off the clock</SectionLabel>
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-4">
           {[
             {
               href: "/watchlist",
               title: "Binge-watch list",
-              body: "What I'm watching, what I've finished and what's next, with ratings.",
-            },
-            {
-              href: "/marvel",
-              title: "The Marvel timeline",
-              body: "Every MCU film and series in release or story order, with a tracker for what you've watched.",
+              body: "What I'm watching after the code ships, what I've finished and what's next, season by season, with ratings.",
             },
           ].map((c) => (
             <Link

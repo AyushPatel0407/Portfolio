@@ -84,9 +84,10 @@ export const workProjects: Project[] = [
   },
   {
     name: "Starkidz",
-    category: "School Management",
+    category: "Kids' Contests Platform",
     description:
-      "School management platform. I led the contest and event creation modules and built QA screens and admin panel features as reusable React components.",
+      "Online contests and events for school children. I led the contest and event creation modules and built QA screens and admin features as reusable React components.",
+    url: "https://thestarkidz.in",
     tags: ["React", "Events & contests", "Admin panel"],
   },
 ];
@@ -144,8 +145,8 @@ export const clientProjects: Project[] = [
   },
 ];
 
-export const earlierBuilds = [
-  { name: "Pixibytez website", detail: "Next.js company site built from Figma designs", period: "" },
+export const earlierBuilds: { name: string; detail: string; period: string; url?: string }[] = [
+  { name: "PixieBytez website", detail: "Next.js company site built from Figma designs", period: "", url: "https://www.pixiebytez.com" },
   { name: "Koheva Quiz Game", detail: "React.js quiz game with Firebase", period: "2023" },
   { name: "Space-bet", detail: "Real-time game built with Socket.io", period: "2023" },
   { name: "News blog", detail: "React app built on a news API at InfoLabz", period: "2022" },

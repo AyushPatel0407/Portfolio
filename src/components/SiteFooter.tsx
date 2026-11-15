@@ -50,7 +50,6 @@ export default function SiteFooter() {
           { href: "/freelance", label: "Freelance" },
           { href: "/blog", label: "Blog" },
           { href: "/watchlist", label: "Watch list" },
-          { href: "/marvel", label: "Marvel timeline" },
         ].map((l) => (
           <Link key={l.href} href={l.href} className="inline-flex min-h-11 items-center underline-offset-4 hover:text-foreground hover:underline">
             {l.label}

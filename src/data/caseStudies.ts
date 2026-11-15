@@ -191,9 +191,9 @@ export const caseStudies: Record<string, CaseStudy> = {
   Starkidz: {
     role: "Front-end developer",
     period: "2023",
-    status: "Delivered",
+    status: "Live",
     summary:
-      "Starkidz is a school management platform. I led the contest and event creation modules and built screens across the QA flow and admin panel.",
+      "Starkidz runs online contests and creative programmes for school children. I led the contest and event creation modules and built screens across the QA flow and admin panel.",
     highlights: [
       {
         title: "Contests and events",
