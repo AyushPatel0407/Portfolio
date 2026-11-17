@@ -13,18 +13,12 @@ export const profile = {
   role: "Tech Head at CHEMAZON · Technical Lead at Kira Intrilogy",
   headline: "I build ERP, CRM and commerce software for Indian businesses.",
   intro:
-    "Full-stack MERN and Next.js developer from Ahmedabad. I'm Technical Lead at Kira Intrilogy, where we've shipped production products since 2023, from a manufacturing ERP to a WhatsApp team inbox. I also lead technology at CHEMAZON.",
+    "Full-stack MERN and Next.js developer from Ahmedabad. I'm Technical Lead at Kira Intrilogy, where I've helped ship products since 2023, from a manufacturing ERP to a WhatsApp team inbox. I also lead technology at CHEMAZON.",
   location: "Ahmedabad, Gujarat, India",
   linkedin: "https://www.linkedin.com/in/ayush-patel-691270187/",
   email: "patelayush4702@gmail.com",
   github: "https://github.com/AyushPatel0407",
 };
-
-export const stats = [
-  { value: "3+ yrs", label: "Building production software" },
-  { value: "8", label: "Products shipped at work" },
-  { value: "MERN", label: "Plus Next.js, NestJS and PostgreSQL" },
-];
 
 export const workProjects: Project[] = [
   {
@@ -152,68 +146,135 @@ export const earlierBuilds: { name: string; detail: string; period: string; url?
   { name: "News blog", detail: "React app built on a news API at InfoLabz", period: "2022" },
 ];
 
-export const experience = [
+// Experience, grouped by company. CHEMAZON and Kira Intrilogy are sister companies under one
+// parent group, so those two roles run side by side; True || False is his own studio.
+export type Company = {
+  company: string;
+  logo?: string; // file in /public/logos
+  url?: string;
+  location: string;
+  kind: "primary" | "side" | "earlier";
+  note?: string;
+  roles: { role: string; type: string; period: string; start: number; end?: number; detail: string; stack?: string[] }[];
+  stack: string[];
+};
+
+export const experience: Company[] = [
   {
-    role: "Tech Head",
     company: "CHEMAZON",
-    type: "Full-time · On-site",
-    period: "Jul 2026 – Present",
-    detail: "Leading technology for a verified B2B chemicals marketplace.",
+    logo: "/logos/chemazon.svg",
+    url: "https://www.chemazon.store",
+    location: "Ahmedabad, India",
+    kind: "primary",
+    note: "Sister company of Kira Intrilogy under the same parent group.",
+    roles: [
+      {
+        role: "Tech Head",
+        type: "Full-time, on-site",
+        period: "Jul 2026 – Present",
+        start: 2026.5,
+        detail:
+          "Leading technology for a verified B2B chemicals marketplace: KYC-checked sellers, quality documents, quotes, escrow-protected payments and live order updates.",
+      },
+    ],
+    stack: ["Next.js", "Node.js", "Express", "MongoDB", "Socket.IO", "Razorpay", "Claude API", "Tailwind CSS"],
   },
   {
-    role: "Technical Lead",
     company: "Kira Intrilogy",
-    type: "Full-time · On-site",
-    period: "Apr 2026 – Present",
-    detail:
-      "Architect and technical lead for the company's SaaS and commerce products: OEMup's architecture and its MCP connector for Claude, and the teams shipping TECTET, ALFAconnect, Night Zero and E Gate.",
+    logo: "/logos/kira-intrilogy.png",
+    url: "https://www.kiraintrilogy.com",
+    location: "Ahmedabad, India",
+    kind: "primary",
+    roles: [
+      {
+        role: "Technical Lead",
+        type: "Full-time, on-site",
+        period: "Apr 2026 – Present",
+        start: 2026.25,
+        detail:
+          "Architect and technical lead for the company's SaaS and commerce products: OEMup's architecture and its MCP connector for Claude, and the teams shipping TECTET, ALFAconnect, Night Zero and E Gate.",
+        stack: ["NestJS", "Next.js", "Redis", "BullMQ", "React Native", "MCP", "Claude API"],
+      },
+      {
+        role: "MERN Stack Developer",
+        type: "Full-time, on-site",
+        period: "Jun 2023 – Nov 2026",
+        start: 2023.42,
+        end: 2026.83,
+        detail:
+          "Built the OEMup ERP: CRM, procurement, multi-level BOM and production, stock, GST accounting and HR. Optimised MongoDB aggregation pipelines, built AG Grid server-side tables for large datasets, Excel bulk import with validation, PDF invoices and role-based permissions.",
+        stack: ["React.js", "Node.js", "Express", "MongoDB", "Redux", "Ant Design", "AG Grid"],
+      },
+      {
+        role: "React JS Developer",
+        type: "Internship",
+        period: "Jan 2023 – May 2023",
+        start: 2023,
+        end: 2023.37,
+        detail: "Front-end work in React, which led to the full-time role.",
+        stack: ["React.js", "JavaScript", "Redux", "Ant Design", "HTML", "CSS", "Git"],
+      },
+    ],
+    stack: ["React.js", "Node.js", "Express", "MongoDB", "NestJS", "Next.js", "Redis", "BullMQ", "AG Grid", "React Native", "MCP"],
   },
   {
-    role: "MERN Stack Developer",
-    company: "Kira Intrilogy",
-    type: "Full-time · On-site",
-    period: "Jun 2023 – Nov 2026",
-    detail:
-      "Built the OEMup ERP: CRM, procurement, multi-level BOM and production, stock, GST accounting and HR. Optimised MongoDB aggregation pipelines, built Ag-Grid server-side tables for large datasets, Excel bulk import with validation, PDF invoices and role-based permissions.",
+    company: "True || False",
+    logo: "/logos/true-or-false.svg",
+    url: "https://trueorfalse.dev/team",
+    location: "Remote",
+    kind: "side",
+    note: "A small software studio with Dev Parikh and Trupal Patel.",
+    roles: [
+      {
+        role: "Founder",
+        type: "",
+        period: "2026 – Present",
+        start: 2026,
+        detail:
+          "We build mobile apps, desktop apps, SaaS, websites, AI and MCP servers. I lead Contact Convoy, LetterHead Studio, MeghVin Foundation and Nyara Melamine.",
+      },
+    ],
+    stack: ["Flutter", "Next.js", "Puppeteer", "Claude API", "MCP", "Google Cloud"],
   },
   {
-    role: "React JS Developer",
-    company: "Kira Intrilogy",
-    type: "Internship",
-    period: "Jan 2023 – May 2023",
-    detail: "Front-end work in React, which led to the full-time role.",
-  },
-  {
-    role: "React.js Intern",
     company: "InfoLabz",
-    type: "Internship · Remote",
-    period: "May 2022 – Jun 2022",
-    detail: "Built a news blog app driven by API calls.",
+    logo: "/logos/infolabz.png",
+    location: "Remote",
+    kind: "earlier",
+    roles: [
+      {
+        role: "React.js Intern",
+        type: "Internship",
+        period: "May 2022 – Jun 2022",
+        start: 2022.33,
+        end: 2022.5,
+        detail: "Built a news blog app driven by API calls.",
+      },
+    ],
+    stack: ["React.js", "JavaScript", "HTML", "CSS", "REST APIs", "Axios", "Git"],
   },
 ];
 
-export const skills = [
-  {
-    group: "Front end",
-    items: ["React.js", "Next.js", "TypeScript", "React Native", "Redux", "JavaScript", "Tailwind CSS", "Ant Design", "Ag-Grid"],
-  },
-  {
-    group: "Back end & data",
-    items: ["Node.js", "Express", "NestJS", "MongoDB", "PostgreSQL", "Prisma", "Redis", "BullMQ", "GraphQL", "Firebase", "Socket.io"],
-  },
-  {
-    group: "Tools & cloud",
-    items: ["Git", "GitHub", "AWS EC2"],
-  },
-  {
-    group: "Domains",
-    items: ["ERP", "CRM", "GST e-invoicing", "B2B marketplaces", "Payments", "WhatsApp messaging", "AI connectors (MCP)"],
-  },
+// Grouped like a system map (row by row, 3 × 3): every layer connects to the back end in the middle.
+export const skills: { group: string; link?: string; items: string[] }[] = [
+  { group: "Front end", link: "REST · GraphQL", items: ["React.js", "Next.js", "TypeScript", "JavaScript", "Tailwind CSS", "Redux", "Ant Design", "Vite", "shadcn/ui", "TanStack Query", "Three.js"] },
+  { group: "Integrations", link: "webhooks", items: ["Razorpay", "WhatsApp Cloud API", "Google Play Billing", "Cloudinary", "Puppeteer"] },
+  { group: "Data", link: "queries · queues", items: ["MongoDB", "PostgreSQL", "Prisma", "Redis", "BullMQ", "SQLite"] },
+  { group: "Mobile", link: "REST · push", items: ["React Native", "Expo", "Flutter", "Firebase"] },
+  { group: "Back end & APIs", items: ["Node.js", "Express", "NestJS", "GraphQL", "Socket.IO", "JWT"] },
+  { group: "AI", link: "MCP · tools", items: ["Claude API", "MCP", "Gemini"] },
+  { group: "Cloud & DevOps", link: "deploys", items: ["AWS EC2", "Google Cloud", "Docker", "GitHub Actions", "PM2", "Turborepo"] },
+  { group: "Testing & tools", link: "CI", items: ["Vitest", "Playwright", "Git", "GitHub", "AG Grid"] },
+  { group: "Domains", items: ["ERP", "CRM", "GST e-invoicing", "B2B marketplaces", "Payments", "WhatsApp messaging", "AI connectors (MCP)"] },
 ];
 
 export const education = {
   degree: "B.E. Computer Engineering",
-  school: "Aditya Silver Oak Institute of Technology",
+  university: "Gujarat Technological University",
+  url: "https://www.gtu.ac.in",
+  logo: "/logos/gtu.png",
+  campus: "Aditya Silver Oak Institute of Technology",
+  campusLogo: "/logos/silver-oak-emblem.png",
   period: "2019 – 2023",
   grade: "CGPA 7.96",
 };
@@ -252,11 +313,11 @@ export const freelance = {
     {
       title: "Next.js websites",
       body: "Fast, search-friendly marketing sites and landing pages that are easy to update.",
-      proof: "Night Zero",
+      proof: "Kira Intrilogy website · MeghVin Foundation",
     },
     {
       title: "Take over an existing codebase",
-      body: "Fix bugs, clean up and ship new features on React, Next.js, Node.js or MongoDB projects that need a steady hand.",
+      body: "Fix bugs, clean up and ship new features on React, Next.js, Node.js or MongoDB projects.",
       proof: "MERN stack",
     },
   ],

@@ -14,28 +14,28 @@ export function ogCard({ eyebrow, title, subtitle }: { eyebrow: string; title: s
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "72px 80px",
-          background: "#0f0f0d",
-          color: "#ecebe6",
+          background: "#f7f6f2",
+          color: "#141413",
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 16, fontSize: 26, color: "#ff6a33", letterSpacing: 4 }}>
-          <div style={{ width: 14, height: 14, borderRadius: 7, background: "#ff6a33" }} />
+        <div style={{ display: "flex", alignItems: "center", gap: 16, fontSize: 26, color: "#b8400b", letterSpacing: 4 }}>
+          <div style={{ width: 14, height: 14, borderRadius: 7, background: "#b8400b" }} />
           {eyebrow.toUpperCase()}
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-          <div style={{ fontSize: title.length > 28 ? 76 : 104, lineHeight: 1, fontFamily: "serif", letterSpacing: -2 }}>
+          <div style={{ fontSize: title.length > 28 ? 76 : 104, lineHeight: 1, fontWeight: 700, letterSpacing: -4 }}>
             {title}
           </div>
           {subtitle && (
-            <div style={{ fontSize: 34, lineHeight: 1.3, color: "#9b9a92", maxWidth: 980 }}>{subtitle}</div>
+            <div style={{ fontSize: 34, lineHeight: 1.3, color: "#66635b", maxWidth: 980 }}>{subtitle}</div>
           )}
         </div>
-        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 26, color: "#9b9a92" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 26, color: "#66635b" }}>
           <span>
-            Ayush Patel<span style={{ color: "#ff6a33" }}>.</span>
+            Ayush Patel<span style={{ color: "#b8400b" }}>.</span>
           </span>
-          <span>Full-stack developer · Ahmedabad</span>
+          <span>Full-Stack Developer · Ahmedabad</span>
         </div>
       </div>
     ),

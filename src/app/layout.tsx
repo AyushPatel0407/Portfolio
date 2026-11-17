@@ -1,36 +1,22 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { education, profile } from "@/data/profile";
 import { siteUrl } from "@/lib/site";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-instrument-serif",
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-});
+// One monospace family for the whole terminal (BRAND.md).
+const mono = JetBrains_Mono({ variable: "--font-code", subsets: ["latin"], weight: ["400", "500", "700", "800"] });
 
 const description =
-  "Ayush Patel is a full-stack developer in Ahmedabad building ERP, CRM, marketplace and SaaS products with MERN, Next.js and NestJS. Tech Head at CHEMAZON.";
+  "Ayush Patel builds ERP, CRM, marketplace and SaaS products with MERN, Next.js and NestJS. Tech Head at CHEMAZON and Technical Lead at Kira Intrilogy.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: "Ayush Patel — Full-Stack Developer",
-    template: "%s · Ayush Patel",
+    template: "%s – Ayush Patel",
   },
   description,
   alternates: { canonical: "/" },
@@ -45,10 +31,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f5f3ee" },
-    { media: "(prefers-color-scheme: dark)", color: "#0f0f0d" },
-  ],
+  themeColor: "#0d1117",
+  colorScheme: "light dark",
 };
 
 // Structured data so search engines and AI assistants know who this site is about.
@@ -58,16 +42,19 @@ const personJsonLd = {
   name: profile.name,
   url: siteUrl,
   email: `mailto:${profile.email}`,
-  jobTitle: "Full-Stack Developer",
+  jobTitle: ["Tech Head", "Technical Lead"],
   worksFor: [
     { "@type": "Organization", name: "CHEMAZON", url: "https://www.chemazon.store" },
     { "@type": "Organization", name: "Kira Intrilogy", url: "https://www.kiraintrilogy.com" },
   ],
   address: { "@type": "PostalAddress", addressLocality: "Ahmedabad", addressRegion: "Gujarat", addressCountry: "IN" },
-  alumniOf: { "@type": "CollegeOrUniversity", name: education.school },
+  alumniOf: { "@type": "CollegeOrUniversity", name: education.university, url: education.url },
   knowsAbout: ["React", "Next.js", "Node.js", "NestJS", "MongoDB", "PostgreSQL", "ERP software", "CRM software"],
-  sameAs: [profile.linkedin, profile.github],
+  memberOf: { "@type": "Organization", name: "True || False", url: "https://trueorfalse.dev" },
+  sameAs: [profile.linkedin, profile.github, "https://trueorfalse.dev/team"],
 };
+
+const THEME_SCRIPT = `try{var t=localStorage.getItem("theme");if(t!=="light")t="dark";document.documentElement.dataset.theme=t;if(localStorage.getItem("motion")==="off")document.documentElement.dataset.motion="off"}catch(e){}`;
 
 export default function RootLayout({
   children,
@@ -75,10 +62,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en-IN" data-theme="dark" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} antialiased`}
+        className={`${mono.variable} antialiased`}
       >
+        {/* Set the saved theme before first paint so dark mode never flashes light. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
         <a href="#content" className="skip-link">
           Skip to content
         </a>
@@ -87,9 +76,9 @@ export default function RootLayout({
           // Static data from profile.ts; "<" is escaped so the JSON can't close the script tag.
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c") }}
         />
-        <div className="mx-auto max-w-6xl px-4 sm:px-8">
+        <div className="site-shell mx-auto max-w-6xl px-4 sm:px-8 2xl:max-w-7xl">
           <SiteHeader />
-          <div id="content" tabIndex={-1} className="outline-none">
+          <div id="content" tabIndex={-1} className="scroll-mt-28 outline-none">
             {children}
           </div>
           <SiteFooter />

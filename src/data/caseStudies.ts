@@ -16,7 +16,7 @@ export type CaseStudy = {
 export const caseStudies: Record<string, CaseStudy> = {
   OEMup: {
     role: "Architect & technical lead",
-    period: "2023 – present",
+    period: "2023 – Present",
     status: "Live",
     summary:
       "OEMup replaces Tally, spreadsheets and paper registers for small and mid-sized Indian factories. One cloud platform runs sales, purchasing, stock, production, GST accounting and HR, and the team uses it from the web and an Android app.",
@@ -31,7 +31,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         title: "Built for large datasets",
-        body: "Optimised MongoDB aggregation pipelines and Ag-Grid server-side row models keep tables of tens of thousands of rows fast, with Excel bulk import that validates every row and reports errors.",
+        body: "Optimised MongoDB aggregation pipelines and AG Grid server-side row models keep tables of tens of thousands of rows fast, with Excel bulk import that validates every row and reports errors.",
       },
       {
         title: "AI connector for Claude",
@@ -42,11 +42,11 @@ export const caseStudies: Record<string, CaseStudy> = {
         body: "A fine-grained permission system controls every module, and Socket.io pushes task, stock and price changes to everyone as they happen.",
       },
     ],
-    stack: ["React", "Vite", "Redux Toolkit", "Ant Design", "Ag-Grid", "Node.js", "Express", "MongoDB", "Socket.io", "React Native", "MCP / Claude", "GitHub Actions", "pm2"],
+    stack: ["React", "Vite", "Redux Toolkit", "Ant Design", "AG Grid", "Node.js", "Express", "MongoDB", "Socket.IO", "React Native", "MCP / Claude", "GitHub Actions", "PM2"],
   },
   CHEMAZON: {
     role: "Tech Head · full-stack developer",
-    period: "2026 – present",
+    period: "2026 – Present",
     status: "Live",
     summary:
       "CHEMAZON is a verified B2B marketplace for industrial chemicals. Buyers purchase batches from KYC-checked sellers and every batch carries its lab documents, so procurement teams can trust what they order.",
@@ -130,7 +130,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         body: "An Android scanner checks signed QR passes against a local SQLite database without holding the signing secret, saves every entry before showing success and syncs later without duplicates.",
       },
       {
-        title: "Tamper-proof passes",
+        title: "Signed QR passes",
         body: "HMAC-signed QR passes, plus a check that blocks the same pass entering twice on a night, with the gate recorded for each check-in.",
       },
       {
@@ -201,7 +201,7 @@ export const caseStudies: Record<string, CaseStudy> = {
       },
       {
         title: "Reusable components",
-        body: "A set of reusable React components kept the admin panel consistent and responsive on every device.",
+        body: "A set of reusable React components kept the admin panel consistent and responsive across screen sizes.",
       },
       {
         title: "Live data and validation",
@@ -226,7 +226,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         body: "Letterhead documents with auto-numbered donation receipts, amounts in words, bulk certificates and PDF export.",
       },
       {
-        title: "Edit everything, never break",
+        title: "Edit everything safely",
         body: "Every text and photo slot is editable from the admin panel; saves rebuild the pages, and the site falls back to built-in content if the database is down.",
       },
     ],
@@ -274,7 +274,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         body: "UTC date normalisation and a shared date component so every page shows the same time.",
       },
     ],
-    stack: ["Next.js 14", "TypeScript", "PostgreSQL", "NextAuth", "Firebase Cloud Messaging", "Razorpay", "GitHub Actions", "pm2"],
+    stack: ["Next.js 14", "TypeScript", "PostgreSQL", "NextAuth", "Firebase Cloud Messaging", "Razorpay", "GitHub Actions", "PM2"],
   },
   "Contact Convoy": {
     role: "Founder · full-stack developer",
@@ -296,7 +296,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         body: "Free, Starter and Pro plans priced per company, bought on the website or through Google Play billing.",
       },
       {
-        title: "Shipped like a product",
+        title: "Production-grade setup",
         body: "Separate repos for app, API, website and admin, with CI, secret scanning, automated tests and deploys to Cloud Run and Firebase Hosting.",
       },
     ],
@@ -340,7 +340,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         body: "Time-of-use pricing with peak and night bands and idle fees.",
       },
       {
-        title: "Security from day one",
+        title: "Hardened auth and APIs",
         body: "Rotating device-bound refresh tokens, account lockout, idempotency keys, rate limiting and redacted audit logs.",
       },
     ],

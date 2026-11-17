@@ -1,58 +1,249 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-:root {
-  --background: #f5f3ee;
-  --surface: #fbfaf7;
-  --foreground: #17160f;
-  --muted: #6b6a62;
-  --line: #dedbd2;
-  --accent: #d9481a;
-  --accent-soft: #f6dfd4;
+/* Terminal — see BRAND.md. Dark terminal is the default; light terminal is the alternative.
+   GitHub-style neutrals with GitHub green. Every text pair >= 4.5:1, borders/fields >= 3:1. */
+:root,
+:root[data-theme="dark"] {
+  --background: #0d1117;
+  --surface: #161b22;
+  --sunken: #1c2129;
+  --band: #10151c;
+  --foreground: #e6edf3;
+  --ink-2: #c9d1d9;
+  --muted: #8b949e;
+  --line: #30363d;
+  --line-strong: #484f58;
+  --field-border: #6e7681;
+  --accent: #3fb950;
+  --accent-soft: #12261a;
+  --accent-2: #d29922;
+  --link: #58a6ff;
+  --ok: #3fb950;
+  --ok-soft: #12261a;
+  --term-bg: #010409;
+  --term-ink: #e6edf3;
+  --term-dim: #8b949e;
+  --term-green: #3fb950;
+  --term-amber: #d29922;
+  --p1: #3fb950;
+  --p2: #39d353;
+  --r: 4px;
+  --r-lg: 8px;
+  --avatar-hoodie: #238636;
+  --avatar-hood: #2ea043;
+  --avatar-strings: #e6edf3;
+  color-scheme: dark;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0f0f0d;
-    --surface: #171714;
-    --foreground: #ecebe6;
-    --muted: #9b9a92;
-    --line: #2a2a26;
-    --accent: #ff6a33;
-    --accent-soft: #3a1d12;
-  }
+:root[data-theme="light"] {
+  --background: #ffffff;
+  --surface: #f6f8fa;
+  --sunken: #eff2f5;
+  --band: #f6f8fa;
+  --foreground: #1f2328;
+  --ink-2: #31373e;
+  --muted: #59636e;
+  --line: #d1d9e0;
+  --line-strong: #b7c0ca;
+  --field-border: #818b98;
+  --accent: #1a7f37;
+  --accent-soft: #dafbe1;
+  --accent-2: #9a6700;
+  --link: #0969da;
+  --ok: #1a7f37;
+  --ok-soft: #dafbe1;
+  --term-bg: #1f2328;
+  --term-ink: #f0f3f6;
+  --term-dim: #9ea7b3;
+  --term-green: #3fb950;
+  --term-amber: #d29922;
+  --p1: #1a7f37;
+  --p2: #40c463;
+  --avatar-hoodie: #1f2328;
+  --avatar-hood: #31373e;
+  --avatar-strings: #40c463;
+  color-scheme: light;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-surface: var(--surface);
+  --color-sunken: var(--sunken);
   --color-foreground: var(--foreground);
+  --color-ink-2: var(--ink-2);
   --color-muted: var(--muted);
   --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
   --color-accent: var(--accent);
   --color-accent-soft: var(--accent-soft);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-serif: var(--font-instrument-serif);
+  --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
+  --color-band: var(--band);
+  --color-accent-2: var(--accent-2);
+  --color-link: var(--link);
+  --font-sans: var(--font-code);
+  --font-mono: var(--font-code);
 }
 
 html {
   scroll-behavior: smooth;
-  /* The full-bleed hero uses 100vw, which includes the scrollbar on desktop;
-     clip on the root too so it can never cause sideways scrolling. */
+  scroll-padding-top: 7rem; /* sticky header never covers a target (WCAG 2.4.11) */
   overflow-x: clip;
+  background: var(--background);
 }
 
 body {
   overflow-x: clip;
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--font-code), ui-monospace, monospace;
+  font-size: 15px;
+  transition: background-color 250ms ease, color 250ms ease;
+  text-rendering: optimizeLegibility;
 }
 
-/* Blog post text, using the site's colours in both themes */
+@layer components {
+  .display {
+    font-family: var(--font-code), ui-monospace, monospace;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 0.92;
+    text-wrap: balance;
+  }
+  .title {
+    font-family: var(--font-code), ui-monospace, monospace;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+  /* Terminal-style label: mono, used for dates, paths, commands and tags. */
+  .code {
+    font-family: var(--font-code), ui-monospace, monospace;
+    font-size: 0.8125rem;
+    letter-spacing: 0;
+  }
+  /* Small secondary label: sentence case, never all caps, never mono. */
+  .eyebrow {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--muted);
+  }
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    transition:
+      border-color 200ms ease-out,
+      box-shadow 200ms ease-out;
+  }
+  a.card:hover,
+  .card-hover:hover {
+    border-color: var(--line-strong);
+    box-shadow: 0 12px 30px -20px rgb(20 22 58 / 0.35);
+  }
+
+  .nudge {
+    display: inline-block;
+    transition: transform 200ms ease-out;
+  }
+  .group:hover .nudge {
+    transform: translate(2px, -2px);
+  }
+  .group:hover .nudge-x {
+    transform: translateX(3px);
+  }
+
+  .link-draw {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1.5px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 220ms ease-out, color 150ms ease-out;
+  }
+  .link-draw:hover {
+    background-size: 100% 1.5px;
+  }
+
+  .btn {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: var(--r);
+    padding: 0.625rem 1.15rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition:
+      background-color 150ms ease-out,
+      border-color 150ms ease-out,
+      color 150ms ease-out;
+  }
+  .btn:active {
+    transform: translateY(1px);
+  }
+  .btn-primary,
+  .btn-accent {
+    background: var(--accent);
+    color: var(--surface);
+  }
+  .btn-primary:hover,
+  .btn-accent:hover {
+    background: color-mix(in srgb, var(--accent) 86%, var(--foreground));
+  }
+  .btn-ghost {
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+  }
+  .btn-ghost:hover {
+    border-color: var(--foreground);
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    padding: 0.15rem 0.5rem;
+    font-family: var(--font-code), ui-monospace, monospace;
+    font-size: 0.75rem;
+    color: var(--ink-2);
+  }
+  /* A terminal window: dark in both themes. */
+  .term {
+    background: var(--term-bg);
+    color: var(--term-ink);
+    border-radius: var(--r-lg);
+    border: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .term-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 0.9rem;
+    border-bottom: 1px solid rgb(255 255 255 / 0.08);
+    font-family: var(--font-code), ui-monospace, monospace;
+    font-size: 0.75rem;
+    color: var(--term-dim);
+  }
+  .term-bar i {
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.18);
+  }
+}
+
+/* Blog post text */
 .prose-site {
-  --tw-prose-body: color-mix(in srgb, var(--foreground) 85%, transparent);
+  --tw-prose-body: var(--ink-2);
   --tw-prose-headings: var(--foreground);
   --tw-prose-links: var(--accent);
   --tw-prose-bold: var(--foreground);
@@ -62,59 +253,53 @@ body {
   --tw-prose-quote-borders: var(--accent);
   --tw-prose-hr: var(--line);
   --tw-prose-code: var(--foreground);
-  --tw-prose-pre-bg: var(--surface);
+  --tw-prose-pre-bg: var(--sunken);
   --tw-prose-pre-code: var(--foreground);
   --tw-prose-th-borders: var(--line);
   --tw-prose-td-borders: var(--line);
 }
-
 .prose-site :is(h2, h3) {
-  font-family: var(--font-instrument-serif), serif;
-  font-weight: 400;
-  letter-spacing: -0.01em;
+  font-weight: 700;
+  letter-spacing: -0.03em;
 }
-
-.prose-site h2 {
-  font-size: 2.25rem;
-}
-
 .prose-site pre {
   border: 1px solid var(--line);
 }
 
-/* ---- Interaction layer: lift, underline draw, press, focus ---- */
+/* Live dot */
+.pulse {
+  position: relative;
+  display: inline-flex;
+  height: 0.5rem;
+  width: 0.5rem;
+  border-radius: 999px;
+  background: var(--ok);
+}
+.pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--ok);
+  animation: pulse 1.8s ease-out 4;
+}
+@keyframes pulse {
+  to {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
 
-.card-lift {
-  transition:
-    transform 200ms ease,
-    border-color 200ms ease;
+/* Entrance for the few things that follow the woven name. */
+.rise {
+  animation: rise 500ms ease-out both;
+  animation-delay: calc(400ms + var(--i, 0) * 60ms);
 }
-.card-lift:hover {
-  transform: translateY(-2px);
-}
-
-.link-draw {
-  background-image: linear-gradient(currentColor, currentColor);
-  background-size: 0% 1px;
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-  transition: background-size 250ms ease, color 200ms ease;
-}
-.link-draw:hover {
-  background-size: 100% 1px;
-}
-
-.btn-press {
-  transition:
-    transform 150ms ease,
-    opacity 150ms ease,
-    border-color 200ms ease;
-}
-.btn-press:hover {
-  transform: translateY(-1px);
-}
-.btn-press:active {
-  transform: translateY(1px) scale(0.98);
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
 }
 
 :focus-visible {
@@ -128,7 +313,7 @@ body {
   left: 1rem;
   top: -4rem;
   z-index: 50;
-  border-radius: 999px;
+  border-radius: 10px;
   background: var(--foreground);
   color: var(--background);
   padding: 0.6rem 1.1rem;
@@ -139,29 +324,168 @@ body {
   top: 1rem;
 }
 
+::selection {
+  background: var(--accent);
+  color: var(--surface);
+}
+
+/* Brand icons: one colour per theme (very dark logos turn light in dark mode). */
+.ti {
+  fill: var(--ti-l);
+}
+:root[data-theme="dark"] .ti {
+  fill: var(--ti-d);
+}
+
+
+/* The experience thread draws itself as you scroll past it. */
+@supports (animation-timeline: view()) {
+  .thread-draw {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: thread-draw linear both;
+    animation-timeline: view();
+    animation-range: entry 15% cover 70%;
+  }
+  @keyframes thread-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+}
+
+/* Avatar (the scroll companion) */
+.avatar-eyes {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: avatar-blink 5s 3;
+}
+@keyframes avatar-blink {
+  0%,
+  94%,
+  100% {
+    transform: scaleY(1);
+  }
+  96% {
+    transform: scaleY(0.1);
+  }
+}
+.avatar-grin {
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+.avatar-smile {
+  transition: opacity 200ms ease;
+}
+.avatar:hover .avatar-grin {
+  opacity: 1;
+}
+.avatar:hover .avatar-smile {
+  opacity: 0;
+}
+
+/* Header identity: text slides up into place, the avatar bobs once per change. */
+.slide-in {
+  animation: slide-in 320ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes slide-in {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+.avatar-bob {
+  animation: avatar-bob 420ms ease-out;
+}
+@keyframes avatar-bob {
+  40% {
+    transform: translateY(-4px);
+  }
+}
+
+/* Blog reading progress */
+@supports (animation-timeline: scroll()) {
+  .read-progress {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 40;
+    height: 3px;
+    background: var(--accent);
+    transform-origin: 0 50%;
+    animation: read-progress linear both;
+    animation-timeline: scroll(root);
+  }
+  @keyframes read-progress {
+    from {
+      transform: scaleX(0);
+    }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
-
-.hero-canvas {
-  animation: hero-fade 1.6s ease-out both;
-}
-
-@keyframes hero-fade {
-  from {
-    opacity: 0;
-    transform: scale(0.96);
+  .thread-draw {
+    animation: none !important;
+    stroke-dashoffset: 0;
   }
 }
 
-::selection {
+/* "Pause animations" (footer switch), WCAG 2.2.2 */
+:root[data-motion="off"] *,
+:root[data-motion="off"] *::before,
+:root[data-motion="off"] *::after {
+  animation: none !important;
+  transition-duration: 0.01ms !important;
+}
+:root[data-motion="off"] .thread-draw {
+  stroke-dashoffset: 0;
+}
+
+/* Full-bleed tinted band behind a section (richer rhythm than rule after rule). */
+.band {
+  background: var(--band);
+  box-shadow: 0 0 0 100vmax var(--band);
+  clip-path: inset(0 -100vmax);
+}
+
+/* Blinking block cursor at the end of the hero session (stops after a few seconds, WCAG 2.2.2). */
+.cursor {
+  display: inline-block;
+  width: 0.6em;
+  height: 1.15em;
   background: var(--accent);
-  color: var(--background);
+  animation: blink 1.05s steps(1) 6;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ---- Header morph: full bar <-> the avatar's circle ---- */
+.header-shadow {
+  filter: drop-shadow(0 0 0.5px var(--line-strong)) drop-shadow(0 10px 24px rgb(0 0 0 / 0.22));
+}
+.header-bar {
+  clip-path: inset(0 0 0 0 round 16px);
+  transition: clip-path 520ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+.header-bar.is-collapsed {
+  clip-path: inset(0 calc(100% - var(--id-w, 4.5rem)) 0 0 round 999px);
+  cursor: pointer;
+}
+.header-bar .header-rest {
+  transition: opacity 260ms ease;
+}
+/* The nav fades out; the avatar and its line of text stay readable in the pill. */
+.header-bar.is-collapsed .header-rest {
+  opacity: 0;
 }

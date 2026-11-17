@@ -1,299 +1,332 @@
+import Image from "next/image";
 import Link from "next/link";
-import HeroCanvas from "@/components/HeroCanvas";
+import { ArrowDown, ArrowUpRight, Award, Briefcase, Mail } from "lucide-react";
+import { siCoursera, siGithub, siUdemy } from "simple-icons";
+import ExperienceThread, { type ThreadStop } from "@/components/ExperienceThread";
+import WorkTerminal, { type WorkEntry } from "@/components/WorkTerminal";
+import { LOGOS, projectIcon } from "@/components/ProjectCard";
+import { caseStudies, slugify } from "@/data/caseStudies";
+import RepoCard from "@/components/RepoCard";
 import SectionLabel from "@/components/SectionLabel";
+import SkillWeave from "@/components/SkillWeave";
+import TechIcon from "@/components/TechIcon";
+import WovenName from "@/components/WovenName";
+import Neofetch from "@/components/Neofetch";
 import {
   certifications,
   clientProjects,
   earlierBuilds,
   education,
   experience,
-  freelance,
   personalProjects,
   profile,
-  skills,
-  stats,
   workProjects,
-  type Project,
 } from "@/data/profile";
-import SkillExplorer from "@/components/SkillExplorer";
-import { allProjects, caseStudies, slugify } from "@/data/caseStudies";
 import { formatDate, getAllPosts } from "@/lib/blog";
 
-function ProjectCard({ project, index }: { project: Project; index: number }) {
-  const pending = !project.description;
-  const hasStudy = Boolean(caseStudies[project.name]);
+function IssuerLogo({ issuer }: { issuer: string }) {
+  const brand = issuer === "Coursera" ? siCoursera : issuer === "Udemy" ? siUdemy : null;
+  if (brand)
+    return (
+      <svg aria-hidden viewBox="0 0 24 24" width={20} height={20} fill={`#${brand.hex}`}>
+        <path d={brand.path} />
+      </svg>
+    );
+  if (issuer === "Microsoft")
+    return (
+      <svg aria-hidden viewBox="0 0 24 24" width={20} height={20}>
+        <path fill="#f25022" d="M1 1h10.5v10.5H1z" />
+        <path fill="#7fba00" d="M12.5 1H23v10.5H12.5z" />
+        <path fill="#00a4ef" d="M1 12.5h10.5V23H1z" />
+        <path fill="#ffb900" d="M12.5 12.5H23V23H12.5z" />
+      </svg>
+    );
+  return <Award aria-hidden size={18} className="text-accent" />;
+}
 
+/** A shell prompt line: user@host, path, command. Decorative for screen readers. */
+function Prompt({ cmd, path = "~" }: { cmd: string; path?: string }) {
   return (
-    <Link
-      href={`/work/${slugify(project.name)}`}
-      className="card-lift group relative flex flex-col justify-between gap-8 rounded-2xl border border-line bg-surface p-6 hover:border-accent sm:p-8"
-    >
-      <div>
-        <div className="mb-6 flex items-center justify-between font-mono text-xs text-muted">
-          <span>{String(index + 1).padStart(2, "0")}</span>
-          <span>{project.category}</span>
-        </div>
-        <h3 className="font-serif text-4xl leading-none tracking-tight sm:text-5xl">{project.name}</h3>
-        <p className={`mt-4 max-w-prose leading-relaxed ${pending ? "italic text-muted" : "text-foreground/80"}`}>
-          {pending ? "Write-up coming soon." : project.description}
-        </p>
-      </div>
-
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <ul className="flex flex-wrap gap-2">
-          {project.tags.map((tag) => (
-            <li key={tag} className="rounded-full border border-line px-3 py-1 font-mono text-[11px] text-muted">
-              {tag}
-            </li>
-          ))}
-        </ul>
-        {hasStudy && (
-          <span className="font-mono text-xs text-foreground transition-colors group-hover:text-accent">
-            Case study <span aria-hidden>→</span>
-          </span>
-        )}
-      </div>
-    </Link>
+    <p className="code text-muted" aria-hidden>
+      <span className="text-ok">ayush@portfolio</span>:<span className="text-link">{path}</span>$ <span className="text-foreground">{cmd}</span>
+    </p>
   );
+}
+
+function LinkedInIcon() {
+  return (
+    <svg aria-hidden viewBox="0 0 24 24" width={16} height={16} fill="currentColor">
+      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z" />
+    </svg>
+  );
+}
+
+/** One stop per role, oldest first; the side studio always comes last. */
+function threadStops(): ThreadStop[] {
+  const rows = experience.flatMap((c) => c.roles.map((r) => ({ c, r })));
+  rows.sort((a, b) => (a.c.kind === "side" ? 1 : 0) - (b.c.kind === "side" ? 1 : 0) || a.r.start - b.r.start);
+  const seen = new Set<string>();
+  return rows.map(({ c, r }) => {
+    const first = !seen.has(c.company);
+    seen.add(c.company);
+    const status: ThreadStop["status"] =
+      c.kind === "side" ? "Side venture" : r.type.startsWith("Internship") ? "Internship" : !first ? "Promoted" : r.end === undefined ? "Current" : "Joined";
+    return {
+      id: `${c.company}-${r.role}`,
+      company: c.company,
+      role: r.role,
+      type: r.type,
+      period: r.period,
+      year: r.start,
+      detail: r.detail,
+      location: c.location,
+      url: c.url,
+      note: c.note,
+      status,
+      logo: c.logo ? <Image src={c.logo} alt="" width={44} height={44} className="h-full w-full object-contain p-1" /> : null,
+      stack: (r.stack ?? c.stack).map((name) => ({ name, icon: <TechIcon name={name} size={14} /> })),
+    };
+  });
 }
 
 export default function Home() {
   const posts = getAllPosts().slice(0, 3);
+  // Every work product as a README in the ~/work terminal.
+  const workEntries: WorkEntry[] = workProjects.map((p) => {
+    const study = caseStudies[p.name];
+    return {
+      slug: slugify(p.name),
+      name: p.name,
+      category: p.category,
+      description: p.description,
+      url: p.url,
+      logo: LOGOS[p.name],
+      icon: (() => {
+        const Icon = projectIcon(p);
+        return <Icon aria-hidden size={15} strokeWidth={2} />;
+      })(),
+      highlights: study ? study.highlights.slice(0, 4).map((h) => h.title) : p.tags,
+      stack: (study?.stack ?? p.tags).slice(0, 8).map((name) => ({ name, icon: <TechIcon name={name} size={13} mono /> })),
+      hasStudy: Boolean(study),
+    };
+  });
 
   return (
     <main id="top">
-      {/* Hero */}
-      <section className="relative pb-20 pt-16 sm:pb-28 sm:pt-24">
-        <div className="absolute -top-20 bottom-0 left-1/2 w-screen -translate-x-1/2">
-          <HeroCanvas />
-        </div>
-        <div className="relative">
-          {freelance.available && (
-            <Link
-              href="/freelance"
-              className="group mb-8 inline-flex min-h-11 items-center gap-2.5 rounded-full border border-line bg-background/70 py-1.5 pl-3 pr-4 text-sm backdrop-blur transition-colors hover:border-accent"
-            >
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-60" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-              </span>
-              {freelance.status}
-              <span className="text-muted transition-colors group-hover:text-accent" aria-hidden>
-                →
-              </span>
-            </Link>
-          )}
-          <p className="mb-8 font-mono text-xs uppercase tracking-[0.2em] text-muted">
-            {profile.role} · {profile.location.split(",")[0]}
-          </p>
-          <h1 className="font-serif text-6xl leading-[0.9] tracking-tight sm:text-8xl lg:text-[9.5rem]">
-            {profile.name.split(" ")[0]}
-            <br />
-            <span className="italic text-accent">{profile.name.split(" ").slice(1).join(" ")}</span>
-          </h1>
-          <div className="mt-12 grid gap-8 sm:grid-cols-[1.2fr_1fr] sm:items-end">
-            <p className="text-2xl leading-snug tracking-tight sm:text-3xl">{profile.headline}</p>
-            <div>
-              <p className="leading-relaxed text-muted">{profile.intro}</p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                <a
-                  href="#work"
-                  className="btn-press inline-flex min-h-11 items-center rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-85"
-                >
-                  See my work
-                </a>
-                <Link
-                  href="/freelance"
-                  className="btn-press inline-flex min-h-11 items-center rounded-full border border-line bg-background/60 px-5 py-2.5 text-sm font-medium backdrop-blur transition-colors hover:border-foreground"
-                >
-                  Hire me
-                </Link>
-              </div>
+
+      {/* Hero: a shell session */}
+      <section className="flex min-h-[calc(100svh-5.5rem)] flex-col justify-center pb-16 pt-10 sm:pt-14">
+        <div className="grid items-start gap-8 xl:grid-cols-[auto_1fr] xl:gap-16">
+          <div className="min-w-0">
+            <Prompt cmd="whoami" />
+            <div className="mt-3">
+              <WovenName lines={["Ayush Patel"]} firstWordOnly className="whitespace-nowrap text-[clamp(5rem,26vw,13.5rem)]" />
             </div>
           </div>
+          <div className="min-w-0">
+            <Prompt cmd="neofetch" />
+            <div className="mt-3">
+              <Neofetch />
+            </div>
+          </div>
+        </div>
 
-          <dl className="mt-20 grid grid-cols-1 border-y border-line sm:grid-cols-3">
-            {stats.map((s, i) => (
-              <div
-                key={s.label}
-                className={`flex flex-col-reverse py-6 sm:px-6 ${i > 0 ? "border-t border-line sm:border-l sm:border-t-0" : "sm:pl-0"}`}
-              >
-                <dt className="mt-1 text-sm text-muted">{s.label}</dt>
-                <dd className="font-serif text-5xl leading-none">{s.value}</dd>
-              </div>
-            ))}
-          </dl>
+        <div className="mt-12 grid gap-10 lg:grid-cols-[1.25fr_1fr] lg:gap-14">
+          <div className="min-w-0">
+            <Prompt cmd="cat about.txt" />
+            <p className="title rise mt-4 max-w-[30ch] text-[1.55rem] leading-[1.25] sm:text-[2.1rem]" style={{ "--i": 0 } as React.CSSProperties}>
+              {profile.headline}
+            </p>
+            <p className="rise mt-4 max-w-[68ch] text-pretty leading-relaxed text-ink-2" style={{ "--i": 1 } as React.CSSProperties}>
+              {profile.intro}
+            </p>
+          </div>
+
+          {/* open: a command menu that fills the column */}
+          <div className="rise min-w-0" style={{ "--i": 2 } as React.CSSProperties}>
+            <Prompt cmd="open" />
+            <ul className="mt-4 divide-y divide-line overflow-hidden rounded-[var(--r-lg)] border border-line bg-surface">
+              {[
+                { href: "#work", cmd: "./see-the-work", note: "Products, case studies", icon: <ArrowDown aria-hidden size={17} />, primary: true },
+                { href: "/freelance", cmd: "./hire-me", note: "Freelance services and a project brief", icon: <Briefcase aria-hidden size={17} /> },
+                ...(profile.email ? [{ href: `mailto:${profile.email}`, cmd: "mail", note: profile.email, icon: <Mail aria-hidden size={17} /> }] : []),
+                { href: profile.linkedin, cmd: "linkedin", note: "Profile and messages", icon: <LinkedInIcon />, external: true },
+                ...(profile.github ? [{ href: profile.github, cmd: "github", note: "Code and activity", icon: <svg aria-hidden viewBox="0 0 24 24" width={17} height={17} fill="currentColor"><path d={siGithub.path} /></svg>, external: true }] : []),
+              ].map((item) => (
+                <li key={item.cmd}>
+                  <a
+                    href={item.href}
+                    {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    className={`group flex min-h-14 items-center gap-3 px-4 py-3 transition-colors hover:bg-sunken ${item.primary ? "bg-accent-soft" : ""}`}
+                  >
+                    <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-[var(--r)] ${item.primary ? "bg-accent text-surface" : "border border-line text-ink-2"}`}>
+                      {item.icon}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="code block font-bold text-foreground">{item.cmd}</span>
+                      <span className="block truncate text-sm text-muted">{item.note}</span>
+                    </span>
+                    <ArrowUpRight aria-hidden size={16} className="nudge shrink-0 text-muted group-hover:text-accent" />
+                    {item.external && <span className="sr-only"> (opens in a new tab)</span>}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <p aria-hidden className="code mt-3 text-muted">
+              ayush@portfolio:~$ <span className="cursor align-middle" />
+            </p>
+          </div>
         </div>
       </section>
 
       {/* Work */}
-      <section id="work" className="scroll-mt-20 pb-24">
-        <SectionLabel index="01">Products I&apos;ve built at work</SectionLabel>
-        <div className="grid gap-4 md:grid-cols-2">
-          {workProjects.map((p, i) => (
-            <ProjectCard key={p.name} project={p} index={i} />
-          ))}
-        </div>
+      <section id="work" className="scroll-mt-28 border-t border-line pb-24 pt-16">
+        <SectionLabel index="" title="Products I've built at work" intro="Production software for manufacturers, marketplaces and teams. Most of it is live and used every day.">
+          cd ~/work
+        </SectionLabel>
+        <WorkTerminal entries={workEntries} />
       </section>
 
-      {/* Client */}
+      {/* Client work + own products as pinned repositories */}
       <section className="pb-24">
-        <SectionLabel index="02">Freelance &amp; client work</SectionLabel>
-        <div className="grid gap-4 md:grid-cols-2">
-          {clientProjects.map((p, i) => (
-            <ProjectCard key={p.name} project={p} index={i} />
-          ))}
-        </div>
-      </section>
+        <SectionLabel index="" title="More projects" intro="Client builds, my own products and the earlier experiments, pinned like repositories.">
+          gh repo list --pinned
+        </SectionLabel>
 
-      {/* Personal */}
-      <section className="pb-24">
-        <SectionLabel index="03">My own products</SectionLabel>
-        <div className="grid gap-4 md:grid-cols-2">
-          {personalProjects.map((p, i) => (
-            <ProjectCard key={p.name} project={p} index={i} />
+        <h3 className="code mb-3 flex items-center gap-2 text-sm font-bold text-ink-2">
+          clients/ <span className="rounded-full border border-line px-2 text-xs font-normal text-muted">{clientProjects.length}</span>
+        </h3>
+        <ul className="grid grid-cols-[minmax(0,1fr)] gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {clientProjects.map((p) => (
+            <li key={p.name}>
+              <RepoCard project={p} />
+            </li>
           ))}
-          <div className="rounded-2xl border border-dashed border-line p-6 sm:p-8">
-            <p className="mb-6 font-mono text-xs uppercase tracking-[0.2em] text-muted">Earlier builds</p>
-            <ul className="divide-y divide-line">
-              {earlierBuilds.map((b) => (
-                <li key={b.name} className="flex items-baseline justify-between gap-4 py-3">
-                  <div>
-                    <p className="font-medium">
-                      {b.url ? (
-                        <a href={b.url} target="_blank" rel="noopener noreferrer" className="link-draw hover:text-accent">
-                          {b.name} <span aria-hidden>↗</span>
-                        </a>
-                      ) : (
-                        b.name
-                      )}
-                    </p>
-                    <p className="text-sm text-muted">{b.detail}</p>
-                  </div>
-                  <span className="font-mono text-xs text-muted">{b.period}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        </ul>
+
+        <h3 className="code mb-3 mt-10 flex items-center gap-2 text-sm font-bold text-ink-2">
+          side-projects/ <span className="rounded-full border border-line px-2 text-xs font-normal text-muted">{personalProjects.length}</span>
+        </h3>
+        <ul className="grid grid-cols-[minmax(0,1fr)] gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {personalProjects.map((p) => (
+            <li key={p.name}>
+              <RepoCard project={p} />
+            </li>
+          ))}
+        </ul>
+
+        <h3 className="code mb-3 mt-10 flex items-center gap-2 text-sm font-bold text-ink-2">
+          archive/ <span className="rounded-full border border-line px-2 text-xs font-normal text-muted">{earlierBuilds.length}</span>
+        </h3>
+        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {earlierBuilds.map((b) => {
+            const inner = (
+              <>
+                <span className="flex items-center justify-between gap-2">
+                  <span className="code truncate font-bold text-link">{b.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-$/, "")}</span>
+                  <span className="code shrink-0 rounded-full border border-line-strong px-2 text-[0.7rem] text-muted">
+                    {b.period || "Archived"}
+                  </span>
+                </span>
+                <span className="mt-1.5 block text-sm leading-relaxed text-ink-2">{b.detail}</span>
+              </>
+            );
+            return (
+              <li key={b.name}>
+                {b.url ? (
+                  <a href={b.url} target="_blank" rel="noopener noreferrer" className="block h-full rounded-[var(--r-lg)] border border-dashed border-line-strong p-4 hover:border-line-strong hover:bg-surface">
+                    {inner}
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                ) : (
+                  <div className="h-full rounded-[var(--r-lg)] border border-dashed border-line-strong p-4">{inner}</div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
       </section>
 
       {/* Experience */}
-      <section id="experience" className="scroll-mt-20 pb-24">
-        <SectionLabel index="04">Experience</SectionLabel>
-        <ol>
-          {experience.map((job) => (
-            <li
-              key={job.role + job.company}
-              className="grid gap-2 border-b border-line py-8 first:pt-0 sm:grid-cols-[14rem_1fr] sm:gap-8"
-            >
-              <div className="font-mono text-xs text-muted">
-                <p>{job.period}</p>
-                <p className="mt-1">{job.type}</p>
-              </div>
-              <div>
-                <h3 className="text-2xl tracking-tight">
-                  {job.role} <span className="font-serif italic text-accent">at</span> {job.company}
-                </h3>
-                <p className="mt-2 max-w-prose leading-relaxed text-muted">{job.detail}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
+      <section id="experience" className="scroll-mt-28 pb-16">
+        <SectionLabel
+          index=""
+          title="Career log"
+          intro="From the first internship to today. CHEMAZON and Kira Intrilogy are sister companies under one parent group, so I lead both. I also founded True || False, a small software studio."
+        >
+          git log --oneline --reverse
+        </SectionLabel>
+        <ExperienceThread stops={threadStops()} />
       </section>
 
       {/* Skills */}
-      <section id="skills" className="scroll-mt-20 pb-24">
-        <SectionLabel index="05">Skills</SectionLabel>
-        <SkillExplorer
-          groups={skills}
-          projects={allProjects().map((p) => ({
-            name: p.name,
-            slug: p.slug,
-            category: p.category,
-            description: [p.description, p.study?.summary, ...(p.study?.highlights.map((h) => `${h.title} ${h.body}`) ?? [])].join(" "),
-            stack: [...(p.study?.stack ?? []), ...p.tags],
-          }))}
-        />
-      </section>
-
-      {/* Off the clock */}
-      <section id="off-the-clock" className="scroll-mt-20 pb-24">
-        <SectionLabel index="06">Off the clock</SectionLabel>
-        <div className="grid gap-4">
-          {[
-            {
-              href: "/watchlist",
-              title: "Binge-watch list",
-              body: "What I'm watching after the code ships, what I've finished and what's next, season by season, with ratings.",
-            },
-          ].map((c) => (
-            <Link
-              key={c.href}
-              href={c.href}
-              className="card-lift group flex flex-col justify-between gap-10 rounded-2xl border border-line bg-surface p-6 hover:border-accent sm:p-8"
-            >
-              <div>
-                <h3 className="font-serif text-4xl leading-none tracking-tight">{c.title}</h3>
-                <p className="mt-4 max-w-prose leading-relaxed text-muted">{c.body}</p>
-              </div>
-              <span className="font-mono text-xs transition-colors group-hover:text-accent">
-                Open <span aria-hidden>→</span>
-              </span>
-            </Link>
-          ))}
-        </div>
+      <section id="skills" className="scroll-mt-28 pb-24">
+        <SectionLabel index="" title="What I build with" intro="Everything I reach for, from the screen down to the servers.">
+          ls ~/stack
+        </SectionLabel>
+        <SkillWeave />
       </section>
 
       {/* Writing */}
       {posts.length > 0 && (
-        <section id="writing" className="scroll-mt-20 pb-24">
-          <SectionLabel index="07">Latest writing</SectionLabel>
+        <section id="writing" className="scroll-mt-28 pb-24">
+          <SectionLabel index="" title="Writing">
+            tail ~/blog
+          </SectionLabel>
           <ul className="border-t border-line">
             {posts.map((post) => (
               <li key={post.slug} className="border-b border-line">
-                <Link
-                  href={`/blog/${post.slug}`}
-                  className="group grid gap-2 py-6 sm:grid-cols-[10rem_1fr_auto] sm:items-baseline sm:gap-8"
-                >
-                  <span className="font-mono text-xs text-muted">{formatDate(post.date)}</span>
+                <Link href={`/blog/${post.slug}`} className="group grid gap-1 py-6 sm:grid-cols-[10rem_1fr_auto] sm:items-baseline sm:gap-8">
+                  <time dateTime={post.date} className="num text-sm text-muted">
+                    {formatDate(post.date)}
+                  </time>
                   <span>
-                    <span className="block font-serif text-3xl leading-tight transition-colors group-hover:text-accent">
-                      {post.title}
-                    </span>
-                    <span className="mt-2 block max-w-prose text-muted">{post.summary}</span>
+                    <span className="title block text-2xl transition-colors group-hover:text-accent">{post.title}</span>
+                    <span className="mt-1 block max-w-[68ch] text-ink-2">{post.summary}</span>
                   </span>
-                  <span className="font-mono text-xs text-muted" aria-hidden>
-                    Read →
-                  </span>
+                  <span className="text-sm text-muted">{post.readingMinutes} min read</span>
                 </Link>
               </li>
             ))}
           </ul>
-          <Link href="/blog" className="mt-4 inline-flex min-h-11 items-center font-mono text-xs uppercase tracking-wider text-accent">
-            All posts →
-          </Link>
         </section>
       )}
 
       {/* Education */}
-      <section className="pb-24">
-        <SectionLabel index={posts.length > 0 ? "08" : "07"}>Education &amp; certifications</SectionLabel>
-        <div className="grid gap-10 md:grid-cols-[1fr_1.4fr]">
-          <div>
-            <p className="font-mono text-xs text-muted">{education.period}</p>
-            <h3 className="mt-2 font-serif text-3xl leading-tight">{education.degree}</h3>
-            <p className="mt-2 text-muted">
-              {education.school} · {education.grade}
-            </p>
-          </div>
-          <ul className="divide-y divide-line border-y border-line">
+      <section id="education" className="scroll-mt-28 pb-24">
+        <SectionLabel index="" title="Education and certificates">
+          cat education.md
+        </SectionLabel>
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr]">
+          <a href={education.url} target="_blank" rel="noopener noreferrer" className="group flex items-start gap-5">
+            <span className="grid h-20 w-20 shrink-0 place-items-center rounded-[14px] border border-line bg-white p-2">
+              <Image src={education.logo} alt="" width={64} height={64} className="h-full w-full object-contain" />
+            </span>
+            <span>
+              <span className="title block text-2xl">{education.degree}</span>
+              <span className="link-draw mt-1 inline-block font-semibold text-accent">{education.university}</span>
+              <span className="sr-only"> (opens in a new tab)</span>
+              <span className="mt-2 flex items-center gap-2 text-ink-2">
+                <Image src={education.campusLogo} alt="" width={20} height={20} className="h-5 w-auto" />
+                {education.campus} campus
+              </span>
+              <span className="num mt-1 block text-sm text-muted">
+                {education.period}, {education.grade}
+              </span>
+            </span>
+          </a>
+          <ul className="border-t border-line">
             {certifications.map((c) => (
-              <li key={c.name} className="flex items-baseline justify-between gap-4 py-4">
-                <span>{c.name}</span>
-                <span className="shrink-0 font-mono text-xs text-muted">
-                  {c.issuer}
-                  {c.year && ` · ${c.year}`}
+              <li key={c.name} className="flex items-center gap-4 border-b border-line py-4">
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-[10px] border border-line bg-white">
+                  <IssuerLogo issuer={c.issuer} />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block font-medium leading-snug">{c.name}</span>
+                  <span className="text-sm text-muted">
+                    {c.issuer}
+                    {c.year && `, ${c.year}`}
+                  </span>
                 </span>
               </li>
             ))}
@@ -303,3 +336,4 @@ export default function Home() {
     </main>
   );
 }
+

@@ -1,4 +1,5 @@
 import { getAllPosts, getPost } from "@/lib/blog";
+export const dynamicParams = false; // only real slugs get an image; unknown ones 404
 import { ogCard, ogSize } from "@/lib/og";
 
 export const size = ogSize;

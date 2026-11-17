@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import { marked } from "marked";
+import sanitizeHtml from "sanitize-html";
 
 // Blog posts are Markdown files in /content/blog. The file name is the URL slug.
 const POSTS_DIR = path.join(process.cwd(), "content", "blog");
@@ -15,7 +16,7 @@ export type PostMeta = {
   readingMinutes: number;
 };
 
-export type Post = PostMeta & { html: string };
+export type Post = PostMeta & { html: string; headings: { id: string; text: string }[] };
 
 function readPostFile(file: string) {
   const raw = fs.readFileSync(path.join(POSTS_DIR, file), "utf8");
@@ -50,8 +51,29 @@ export async function getPost(slug: string): Promise<Post | null> {
   if (!/^[a-z0-9-]+$/.test(slug) || !fs.existsSync(path.join(POSTS_DIR, file))) return null;
   const { meta, content, draft } = readPostFile(file);
   if (draft) return null;
-  const html = await marked.parse(content);
-  return { ...meta, html };
+  // Posts are committed Markdown, but sanitise anyway so a pasted <script> can never run.
+  const html = sanitizeHtml(await marked.parse(content), {
+    allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img", "h1", "h2", "del"]),
+    allowedAttributes: { ...sanitizeHtml.defaults.allowedAttributes, a: ["href", "title", "target", "rel"], h2: ["id"], img: ["src", "alt", "title", "width", "height"], code: ["class"] },
+    allowedSchemes: ["https", "mailto"],
+    transformTags: {
+      h2: (tag, attribs) => ({ tagName: "h2", attribs }),
+      a: (tag, attribs) =>
+        /^https?:\/\//.test(attribs.href ?? "")
+          ? { tagName: "a", attribs: { ...attribs, target: "_blank", rel: "noopener noreferrer" } }
+          : { tagName: "a", attribs },
+    },
+    allowedSchemesAppliedToAttributes: ["href", "src"],
+  });
+  // Give each h2 an id so the post can show a table of contents.
+  const headings: { id: string; text: string }[] = [];
+  const withIds = html.replace(/<h2>(.*?)<\/h2>/g, (_, inner: string) => {
+    const text = inner.replace(/<[^>]+>/g, "");
+    const id = text.toLowerCase().replace(/&[a-z]+;/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    headings.push({ id, text });
+    return `<h2 id="${id}">${inner}</h2>`;
+  });
+  return { ...meta, html: withIds, headings };
 }
 
 export function formatDate(date: string) {

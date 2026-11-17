@@ -47,14 +47,14 @@ export default function ProjectBrief({ services, email, linkedin }: Props) {
   }
 
   const field =
-    "w-full rounded-xl border border-line bg-background px-4 py-3 text-base outline-none transition-colors focus:border-accent";
+    "w-full rounded-xl border border-[var(--field-border)] bg-surface px-4 py-3 text-base text-foreground transition-colors focus:border-accent";
 
   return (
-    <form onSubmit={onSubmit} className="grid gap-5 rounded-2xl border border-line bg-surface p-6 sm:p-8">
+    <form onSubmit={onSubmit} className="card grid gap-5 p-6 sm:p-8">
       <div className="grid gap-5 lg:grid-cols-2">
         <label className="grid gap-2 text-sm">
           <span className="text-muted">Your name</span>
-          <input className={field} value={name} onChange={(e) => setName(e.target.value)} placeholder="Priya Shah" />
+          <input className={field} autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Priya Shah" />
         </label>
         <label className="grid gap-2 text-sm">
           <span className="text-muted">Timeline</span>
@@ -86,9 +86,9 @@ export default function ProjectBrief({ services, email, linkedin }: Props) {
       <div className="flex flex-wrap items-center gap-4">
         <button
           type="submit"
-          className="btn-press rounded-full bg-accent px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
+          className="btn btn-accent"
         >
-          {email ? "Send by email" : "Copy brief & open LinkedIn ↗"}
+          {email ? "Send by email" : <>Copy brief & open LinkedIn<span className="sr-only"> (opens in a new tab)</span></>}
         </button>
         <p className="text-sm text-muted" role="status">
           {status === "copied" && "Brief copied. Paste it into a LinkedIn message."}
